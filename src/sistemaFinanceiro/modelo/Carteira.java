@@ -1,5 +1,36 @@
 package sistemaFinanceiro.modelo;
+import java.util.*;
 
 public class Carteira {
-    
+    private String instituicao;
+    private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+
+    //metodos : add / rmv lançamentos, mostrar lançamentos, calcular saldo
+
+    public void addLancamento(Lancamento lancam){
+        if(lancam == null)
+            throw new IllegalArgumentException("o lançamento não pode ser nulo!");
+        lancamentos.add(lancam);
+    }
+
+    public boolean removeLancamento(int id){
+        if(id < 0)
+            throw new IllegalArgumentException();
+        for (int i = 0; i<lancamentos.size(); i++) {
+            if(lancamentos.get(i).getId() == id){
+                lancamentos.remove(i);
+                return true;
+            }       
+        }
+        System.out.println("id inexistente");
+        return false;
+    }
+
+    public double calculaSaldo(){
+        double saldo = 0.0;
+        for (Lancamento l : lancamentos) {
+            saldo += l.getValor();  //tem que garantir que os valores de despesa são AUTOMATICAMENTE registrados com valor negativo
+    }
+        return saldo;
+    }
 }
