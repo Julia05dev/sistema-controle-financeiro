@@ -44,4 +44,9 @@ public class Carteira {
             System.out.println(l);
         }
     }
+
+    public void filtraLancamentos(int ano, int mes, int dia){
+        LocalDate data = LocalDate.of(ano, mes, dia);
+        
+    }
 }
