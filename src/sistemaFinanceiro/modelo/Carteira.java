@@ -1,5 +1,6 @@
 package sistemaFinanceiro.modelo;
 import java.util.*;
+import java.time.*;
 
 public class Carteira {
     private String instituicao;
@@ -32,5 +33,15 @@ public class Carteira {
             saldo += l.getValor();  //tem que garantir que os valores de despesa são AUTOMATICAMENTE registrados com valor negativo
     }
         return saldo;
+    }
+
+    public void mostraLancamentos(){
+        if(lancamentos.isEmpty()){
+            System.out.println("nenhum lançamento cadastrado!");
+            return;
+        }
+        for (Lancamento l : lancamentos) {
+            System.out.println(l);
+        }
     }
 }
