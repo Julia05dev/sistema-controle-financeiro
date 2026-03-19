@@ -1,10 +1,10 @@
 package sistemaFinanceiro.modelo;
 //import java.util.*;
-//import java.time.*;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class Lancamento {
-    //private LocalDate data;
+    private LocalDate data;
     private int id;
     private double valor;
     private String tipo;
@@ -12,11 +12,17 @@ public class Lancamento {
     private String descricao;   //n sei se faz sentido manter
     private String meioDePagamento;
 
-    DateTimeFormatter data = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
     @Override
     public String toString(){
-        String str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + data + " | " + meioDePagamento;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String dataFormatada;
+        if(data != null)
+            dataFormatada = data.format(formatter);
+        else 
+            dataFormatada = "-";
+
+        String str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + dataFormatada + " | " + meioDePagamento;
         return str;
     }
 
