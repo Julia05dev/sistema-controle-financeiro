@@ -12,6 +12,19 @@ public class Lancamento {
     private String descricao;   //n sei se faz sentido manter
     private String meioDePagamento;
 
+    public Lancamento(String categoria, LocalDate data, String descricao, String meioDePagamento, String tipo, double valor) {
+        if(categoria == null || data == null || meioDePagamento == null || tipo == null || valor == 0.0)
+            throw new IllegalArgumentException();
+
+        this.categoria = categoria;
+        this.data = data;
+        this.descricao = descricao;
+        this.meioDePagamento = meioDePagamento;
+        this.tipo = tipo;
+        this.valor = valor;
+        //criar id randomizado
+    }
+
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -26,12 +39,14 @@ public class Lancamento {
         return str;
     }
 
+    public LocalDate getData(){
+        return data;
+    }
+
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
+    //como o ID é definido pelo sistema, não é seguro ter um setId que permite qualquer lugar do código altera-lo
 
     public double getValor() {
         return valor;

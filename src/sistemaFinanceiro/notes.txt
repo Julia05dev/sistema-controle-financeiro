@@ -1,10 +1,4 @@
-V1: 
-- registrar um lançamento
-- remover um lançamento
-- verificar saldo total
-- filtrar receitas e despesas (por categoria ou data)
-
-Entidades:
-- Sistema Financeiro => guarda várias carteiras e métodos (classe de controle)
-- Carteira => instituição bancária, lançamentos, meio de pagamento
-- Lançamentos => id, descrição, data, tipo (r / s), categoria, carteira
+PROXIMAS ALTERAÇÕES:
+- fazer lógica para gerar o ID dos lanamentos automaticamente
+- definir se gastos aparecerão automaticamente com sinal - ou aparece sempre sem sinal e no calculaSaldo 
+  colocamos uma condição (pra saber se vai + ou - a depender se é uma despesa ou receita)
