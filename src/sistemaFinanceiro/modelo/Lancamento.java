@@ -9,16 +9,16 @@ public class Lancamento {
     private double valor;
     private String tipo;
     private String categoria;
-    private String descricao;   //n sei se faz sentido manter
+    //private String descricao;   //n sei se faz sentido manter
     private String meioDePagamento;
 
-    public Lancamento(String categoria, LocalDate data, String descricao, String meioDePagamento, String tipo, double valor) {
+    public Lancamento(String categoria, LocalDate data, /*String descricao,*/ String meioDePagamento, String tipo, double valor) {
         if(categoria == null || data == null || meioDePagamento == null || tipo == null || valor == 0.0)
             throw new IllegalArgumentException();
 
         this.categoria = categoria;
         this.data = data;
-        this.descricao = descricao;
+        //this.descricao = descricao;
         this.meioDePagamento = meioDePagamento;
         this.tipo = tipo;
         this.valor = valor;
@@ -69,12 +69,12 @@ public class Lancamento {
         this.categoria = categoria;
     }
 
-    public String getDescricao() {
+    /*public String getDescricao() {
         return descricao;
     }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
+    }*/
 
     public String getMeioDePagamento() {
         return meioDePagamento;
