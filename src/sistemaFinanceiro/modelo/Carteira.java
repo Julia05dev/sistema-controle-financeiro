@@ -4,7 +4,7 @@ import java.time.*;
 
 public class Carteira {
     private String instituicao;
-    private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+    private List<Lancamento> lancamentos = new ArrayList<>();
 
     //metodos : add / rmv lançamentos, mostrar lançamentos, calcular saldo
 
@@ -14,8 +14,8 @@ public class Carteira {
         lancamentos.add(lancam);
     }
 
-    public void criaLancamento(String categoria, LocalDate data, /*String descricao,*/ String meioDePagamento, String tipo, double valor){
-        Lancamento novoLancamento = new Lancamento(categoria, data, /*descricao,*/ meioDePagamento, tipo, valor);
+    public void criaLancamento(String categoria, LocalDate data, int id, String meioDePagamento, String tipo, double valor){
+        Lancamento novoLancamento = new Lancamento(categoria, data, id, meioDePagamento, tipo, valor);
         addLancamento(novoLancamento);
     }
 
@@ -34,7 +34,7 @@ public class Carteira {
     public double calculaSaldo(){
         double saldo = 0.0;
         for (Lancamento l : lancamentos) {
-            saldo += l.getValor();  //tem que garantir que os valores de despesa são AUTOMATICAMENTE registrados com valor negativo
+            saldo += l.getValor(); 
     }
         return saldo;
     }

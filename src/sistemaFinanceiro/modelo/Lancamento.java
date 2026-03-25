@@ -5,26 +5,28 @@ import java.time.format.DateTimeFormatter;
 
 public class Lancamento {
     private LocalDate data;
+    private static int contador = 0;
     private int id;
     private double valor;
-    private String tipo;
+    private String tipo;    //receita ou despesa
     private String categoria;
-    //private String descricao;   //n sei se faz sentido manter
     private String meioDePagamento;
 
-    public Lancamento(String categoria, LocalDate data, /*String descricao,*/ String meioDePagamento, String tipo, double valor) {
+    public Lancamento(String categoria, LocalDate data, int id, String meioDePagamento, String tipo, double valor) {
         if(categoria == null || data == null || meioDePagamento == null || tipo == null || valor == 0.0)
             throw new IllegalArgumentException();
-
+        contador++;
         this.categoria = categoria;
         this.data = data;
-        //this.descricao = descricao;
         this.meioDePagamento = meioDePagamento;
         this.tipo = tipo;
-        this.valor = valor;
-        //criar id randomizado
+        if(tipo.equalsIgnoreCase("receita"))
+            this.valor = valor;
+        else if(tipo.equalsIgnoreCase("despesa"))
+            this.valor = -valor;
+        this.id = contador;
     }
-
+    
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -68,13 +70,6 @@ public class Lancamento {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-
-    /*public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }*/
 
     public String getMeioDePagamento() {
         return meioDePagamento;
