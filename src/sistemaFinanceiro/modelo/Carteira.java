@@ -3,8 +3,8 @@ import java.util.*;
 import java.time.*;
 
 public class Carteira {
-    private String instituicao;
-    private List<Lancamento> lancamentos = new ArrayList<>();
+    //private String instituicao;
+    private final List<Lancamento> lancamentos = new ArrayList<>(); //final deixa claro que a carteira sempre trabalha com a mesma lista
 
     //metodos : add / rmv lançamentos, mostrar lançamentos, calcular saldo
 
@@ -14,8 +14,8 @@ public class Carteira {
         lancamentos.add(lancam);
     }
 
-    public void criaLancamento(String categoria, LocalDate data, int id, String meioDePagamento, String tipo, double valor){
-        Lancamento novoLancamento = new Lancamento(categoria, data, id, meioDePagamento, tipo, valor);
+    public void criaLancamento(String categoria, LocalDate data, String meioDePagamento, String tipo, double valor){
+        Lancamento novoLancamento = new Lancamento(categoria, data, meioDePagamento, tipo, valor);
         addLancamento(novoLancamento);
     }
 

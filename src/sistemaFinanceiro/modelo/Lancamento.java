@@ -12,7 +12,7 @@ public class Lancamento {
     private String categoria;
     private String meioDePagamento;
 
-    public Lancamento(String categoria, LocalDate data, int id, String meioDePagamento, String tipo, double valor) {
+    public Lancamento(String categoria, LocalDate data, String meioDePagamento, String tipo, double valor) {
         if(categoria == null || data == null || meioDePagamento == null || tipo == null || valor == 0.0)
             throw new IllegalArgumentException();
         contador++;
