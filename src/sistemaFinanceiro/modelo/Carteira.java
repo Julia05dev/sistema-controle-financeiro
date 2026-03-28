@@ -39,29 +39,44 @@ public class Carteira {
         return saldo;
     }
 
-    public void mostraLancamentos(){
+    public boolean mostraLancamentos(){
         if(lancamentos.isEmpty()){
-            System.out.println("nenhum lançamento cadastrado!");
-            return;
-        }
-        for (Lancamento l : lancamentos) {
-            System.out.println(l);
-        }
+            return false;
+        }else{
+            for (Lancamento l : lancamentos) {
+                System.out.println(l);
+            }
+            return true;    
+        }   
     }
 
     public void filtraLancamentos(int ano, int mes, int dia){
         LocalDate data = LocalDate.of(ano, mes, dia);
+        int cont = 0;
 
         for (Lancamento l : lancamentos) {
-            if(data.equals(l.getData()))
+            if(data.equals(l.getData())){
                 System.out.println(l);
+                cont ++;
+            }
+                
         }
+
+        if(cont == 0)   
+            System.out.println("Nenhum lancamento nessa data!");
     }
 
     public void filtrarLancamentosMes(int ano, int mes){
+        int cont = 0;
+
         for (Lancamento l : lancamentos) {
-            if((l.getData().getMonthValue() == mes && l.getData().getYear() == ano))
+            if((l.getData().getMonthValue() == mes && l.getData().getYear() == ano)){
                 System.out.println(l);
+                cont++;
+            }
+             
+        if(cont == 0)
+            System.out.println("Nenhum lancamento nesse mes!");
         }
     }
 }
