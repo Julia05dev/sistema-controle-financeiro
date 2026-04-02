@@ -29,38 +29,110 @@ public class Main {
             System.out.println
             ("ESCOLHA UMA OPÇÃO:\n1- fazer um lancamento\n2- remover um lancamento\n3- calcular saldo\n4- mostrar lancamentos\n5- filtrar lancamentos\n0- SAIR");
             System.out.println("-------------------------------------------------------------");
-            System.out.println();
 
             controle = scanner.nextInt();
             scanner.nextLine(); //consome o \n que fica no buffer
             switch(controle){
                 case 1:{
-                    System.out.println("informe os seguintes campos:");
+                    //TIPO (receita/despesa)
+                    System.out.println("Selecione o tipo:"); 
+                    System.out.println("1- Receita\n2- Despesa");
+                    System.out.println();
+                    int c3 = scanner.nextInt();
+                    //System.out.println("-------------------------------------------------------------");
+                    String tipo = null;
+                    String categoria = null;
+                    System.out.println("selecione a categoria:");  
+                    switch(c3){
+                        case 1:{
+                            tipo = "receita";
+                            System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
+                            //System.out.println();
+                            //scanner.nextLine();
+                            int cA = scanner.nextInt();
+                            System.out.println("-------------------------------------------------------------");
 
-                    System.out.println("categoria:");   //swich case aqui
-                    //System.out.println("1- Mercado\n2- Beleza\n3- Lazer\n4- Papelaria\n5- Aluguel");
-                    //int cat
+                            switch(cA){
+                                case 1:{
+                                    categoria = "emprego";
+                                    break;
+                                }
+                                case 2:{
+                                    categoria = "freelance";
+                                    break;
+                                }
+                                case 3:{
+                                    categoria = "presente";
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 2:{
+                            tipo = "despesa";
+                            System.out.println("1- Mercado\n2- Contas\n3- Beleza\n4- Lazer\n5- Farmacia\n");
+                            int cB = scanner.nextInt();
+                            System.out.println("-------------------------------------------------------------");
+                            switch(cB){
+                                case 1: {
+                                    categoria = "mercado";
+                                    break;
+                                }
+                                case 2: {
+                                    categoria = "contas";
+                                    break;
+                                }
+                                case 3: {
+                                    categoria = "beleza";
+                                    break;
+                                }
+                                case 4: {
+                                    categoria = "lazer";
+                                    break;
+                                }
+                                case 5: {
+                                    categoria = "farmacia";
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
 
-
-                    String categoria = scanner.nextLine();
-                    System.out.println("data (formato dd/MM/yyyy):");
-                    LocalDate data = lerData(scanner);   
-                    System.out.println("meio de pagamento:");   //swich case aqui
-
-
-
-                    String meioDePagamento = scanner.nextLine();
-                    System.out.println("tipo:");    //swich case aqui
-
-
-
-                    String tipo = scanner.nextLine();
-                    System.out.println("valor (apenas o número sem nenhum símbolo):");  //tratar entradas erradas
+                    //VALOR
+                    System.out.println("valor (apenas o número sem nenhum símbolo):\n");  //tratar entradas erradas
+                    //System.out.println();
                     double valor = scanner.nextDouble();    //NAO TA LENDO
                     scanner.nextLine(); //consome o \n que fica no buffer
-
-                    carteira.criaLancamento(categoria, data, meioDePagamento, tipo, valor);
                     System.out.println();
+                    //scanner.nextLine();
+                    
+                    //DATA
+                    System.out.println("Data (formato dd/MM/yyyy):");
+                    System.out.println();
+                    //scanner.nextLine();
+                    LocalDate data = lerData(scanner);   
+                    System.out.println("-------------------------------------------------------------");
+                    
+                    //MEIO DE PAGAMENTO --> so deveria aparecer caso seja despesa
+                    System.out.println("Selecione o meio de pagamento:"); 
+                    System.out.println("1- Debito\n2- Credito");
+                    System.out.println();
+                    int c2 = scanner.nextInt();
+                    System.out.println("-------------------------------------------------------------");
+                    String meioDePagamento = null;
+                    switch(c2){
+                        case 1:{
+                            meioDePagamento = "debito";
+                            break;
+                        }
+                        case 2:{
+                            meioDePagamento = "credito";
+                            break;
+                        }
+                    }
+    
+                    carteira.criaLancamento(categoria, data, meioDePagamento, tipo, valor);
                     break;   
                 }
                 case 2:{

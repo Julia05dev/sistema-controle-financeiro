@@ -37,7 +37,13 @@ public class Lancamento {
         else 
             dataFormatada = "-";
 
+        //String str = null;
+        //if(tipo.equals("Despesa")){
         String str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + dataFormatada + " | " + meioDePagamento;
+/*         }else if(tipo.equals("Receita")){
+            str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + dataFormatada;
+        }
+         */
         return str;
     }
 

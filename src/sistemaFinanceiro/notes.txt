@@ -9,13 +9,8 @@ obs: acho que o parâmetro descrição não faz muito sentido e não tem muita u
 
      inclusive, onde eu implemento essas categorias?
 
-- ID automático ✓
-- travar ID para não ser alterado ✓
-- criar main
-- menu principal
-- opção criar lançamento
-- mostrar lançamentos
-- calcular saldo
-- remover lançamento
-- filtrar por data/mês
-- ajustes de robustez
+✓
+
+- não estou tratando entradas erradas no switch case
+- ajustar o switch case pra não perguntar meio de pagamento em caso de receita
+- acertar o toString pra não exibir meio de pagamento em caso de receita
