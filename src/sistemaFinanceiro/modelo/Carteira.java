@@ -3,10 +3,7 @@ import java.util.*;
 import java.time.*;
 
 public class Carteira {
-    //private String instituicao;
     private final List<Lancamento> lancamentos = new ArrayList<>(); //final deixa claro que a carteira sempre trabalha com a mesma lista
-
-    //metodos : add / rmv lançamentos, mostrar lançamentos, calcular saldo
 
     public void addLancamento(Lancamento lancam){
         if(lancam == null)
@@ -28,7 +25,7 @@ public class Carteira {
                 return true;
             }       
         }
-        return false;   //melhor retornar boolean e deixar o print pra main (não foi possivel loclaizar o lançamento)
+        return false;   
     }
 
     public double calculaSaldo(){
@@ -61,7 +58,6 @@ public class Carteira {
             }
                 
         }
-
         if(cont == 0)   
             System.out.println("Nenhum lancamento nessa data!");
     }

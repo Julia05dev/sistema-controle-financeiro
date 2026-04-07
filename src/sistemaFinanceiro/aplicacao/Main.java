@@ -36,7 +36,7 @@ public class Main {
     public static void main(String[] args) {
         Carteira carteira = new Carteira();
         int controle;
-        Scanner scanner = new Scanner(System.in);   //tem que tratar excessão
+        Scanner scanner = new Scanner(System.in);   
         do{
             System.out.println("-------------------------------------------------------------");
             System.out.println
@@ -51,7 +51,6 @@ public class Main {
                     System.out.println("1- Receita\n2- Despesa");
                     System.out.println();
                     int tp = scanner.nextInt();
-                    //System.out.println("-------------------------------------------------------------");
                     String tipo = null;
                     String categoria = null;
                     String meioDeMovimentacao = null;
@@ -148,9 +147,9 @@ public class Main {
                     }
 
                     //VALOR
-                    System.out.println("valor (apenas o número sem nenhum símbolo):\n");  //tratar entradas erradas
+                    System.out.println("valor (apenas o número sem nenhum símbolo):\n"); 
                     double valor = scanner.nextDouble();   
-                    scanner.nextLine(); //consome o \n que fica no buffer
+                    scanner.nextLine(); 
                     System.out.println("-------------------------------------------------------------");
                     
                     //DATA
@@ -165,7 +164,6 @@ public class Main {
                 case 2:{
                     if(carteira.mostraLancamentos()){
                         System.out.println("Informe o id do lancamento a ser removido:");
-                        //carteira.mostraLancamentos();
                         int idRemove = scanner.nextInt();
                         scanner.nextLine();
                         if(carteira.removeLancamento(idRemove)){

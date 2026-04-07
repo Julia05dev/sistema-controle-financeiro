@@ -8,7 +8,7 @@ public class Lancamento {
     private static int contador = 0;
     private int id;
     private double valor;
-    private String tipo;    //receita ou despesa
+    private String tipo; //receita ou despesa
     private String categoria;
     private String meioDeMovimentacao;
 
@@ -48,7 +48,6 @@ public class Lancamento {
     public int getId() {
         return id;
     }
-    //como o ID é definido pelo sistema, não é seguro ter um setId que permite qualquer lugar do código altera-lo
 
     public double getValor() {
         return valor;
