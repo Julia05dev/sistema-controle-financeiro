@@ -1,14 +1,3 @@
-PROXIMAS ALTERAÇÕES:
-- fazer lógica para gerar o ID dos lanamentos automaticamente
-- definir se gastos aparecerão automaticamente com sinal - ou aparece sempre sem sinal e no calculaSaldo 
-  colocamos uma condição (pra saber se vai + ou - a depender se é uma despesa ou receita)
-
-obs: acho que o parâmetro descrição não faz muito sentido e não tem muita utilidade, o nome do lançamento
-     já é definido pelo usuário, acredito que isso basta para "descrever" brevemente do que se trata
-     (além das categorias que os lançamentos ja possuem)
-
-     inclusive, onde eu implemento essas categorias?
-
 ✓
 
 - não estou tratando entradas erradas no switch case

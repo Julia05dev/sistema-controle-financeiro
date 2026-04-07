@@ -38,17 +38,15 @@ public class Main {
                     System.out.println("Selecione o tipo:"); 
                     System.out.println("1- Receita\n2- Despesa");
                     System.out.println();
-                    int c3 = scanner.nextInt();
+                    int tp = scanner.nextInt();
                     //System.out.println("-------------------------------------------------------------");
                     String tipo = null;
                     String categoria = null;
                     System.out.println("selecione a categoria:");  
-                    switch(c3){
-                        case 1:{
+                    switch(tp){
+                        case 1:{    //receita
                             tipo = "receita";
                             System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
-                            //System.out.println();
-                            //scanner.nextLine();
                             int cA = scanner.nextInt();
                             System.out.println("-------------------------------------------------------------");
 
