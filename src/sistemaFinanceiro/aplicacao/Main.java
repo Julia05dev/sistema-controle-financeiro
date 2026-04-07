@@ -42,7 +42,7 @@ public class Main {
                     //System.out.println("-------------------------------------------------------------");
                     String tipo = null;
                     String categoria = null;
-                    String meioDePagamento = null;
+                    String meioDeMovimentacao = null;
                     System.out.println("selecione a categoria:");  
                     switch(tp){
                         case 1:{    //receita
@@ -74,15 +74,15 @@ public class Main {
                             System.out.println("-------------------------------------------------------------");
                             switch(c2){
                                 case 1:{
-                                    meioDePagamento = "pix";
+                                    meioDeMovimentacao = "pix";
                                     break;
                                 }
                                 case 2:{
-                                    meioDePagamento = "transferencia";
+                                    meioDeMovimentacao = "transferencia";
                                     break;
                                 }
                                 case 3:{
-                                    meioDePagamento = "deposito";
+                                    meioDeMovimentacao = "deposito";
                                 }
                             }
                             break;
@@ -123,11 +123,11 @@ public class Main {
                             System.out.println("-------------------------------------------------------------");
                             switch(c2){
                                 case 1:{
-                                    meioDePagamento = "debito";
+                                    meioDeMovimentacao = "debito";
                                     break;
                                 }
                                 case 2:{
-                                    meioDePagamento = "credito";
+                                    meioDeMovimentacao = "credito";
                                     break;
                                 }
                             }
@@ -148,7 +148,7 @@ public class Main {
                     System.out.println("-------------------------------------------------------------");
                     
                     //criando o lançamento
-                    carteira.criaLancamento(categoria, data, meioDePagamento, tipo, valor);
+                    carteira.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
                     break;   
                 }
                 case 2:{

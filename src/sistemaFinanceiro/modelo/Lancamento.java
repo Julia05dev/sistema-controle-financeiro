@@ -10,15 +10,15 @@ public class Lancamento {
     private double valor;
     private String tipo;    //receita ou despesa
     private String categoria;
-    private String meioDePagamento;
+    private String meioDeMovimentacao;
 
-    public Lancamento(String categoria, LocalDate data, String meioDePagamento, String tipo, double valor) {
-        if(categoria == null || data == null || meioDePagamento == null || tipo == null || valor == 0.0)
+    public Lancamento(String categoria, LocalDate data, String meioDeMovimentacao, String tipo, double valor) {
+        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor == 0.0)
             throw new IllegalArgumentException();
         contador++;
         this.categoria = categoria;
         this.data = data;
-        this.meioDePagamento = meioDePagamento;
+        this.meioDeMovimentacao = meioDeMovimentacao;
         this.tipo = tipo;
         if(tipo.equalsIgnoreCase("receita"))
             this.valor = valor;
@@ -39,7 +39,7 @@ public class Lancamento {
 
         //String str = null;
         //if(tipo.equals("Despesa")){
-        String str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + dataFormatada + " | " + meioDePagamento;
+        String str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + dataFormatada + " | " + meioDeMovimentacao;
 /*         }else if(tipo.equals("Receita")){
             str = "["+id+"]" + " | " + tipo + " | " + categoria + " | " + "R$"+valor + " | " + dataFormatada;
         }
@@ -77,11 +77,11 @@ public class Lancamento {
         this.categoria = categoria;
     }
 
-    public String getMeioDePagamento() {
-        return meioDePagamento;
+    public String getmeioDeMovimentacao() {
+        return meioDeMovimentacao;
     }
-    public void setMeioDePagamento(String meioDePagamento) {
-        this.meioDePagamento = meioDePagamento;
+    public void setmeioDeMovimentacao(String meioDeMovimentacao) {
+        this.meioDeMovimentacao = meioDeMovimentacao;
     }    
 
 }

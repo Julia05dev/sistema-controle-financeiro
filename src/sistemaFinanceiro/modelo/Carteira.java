@@ -14,8 +14,8 @@ public class Carteira {
         lancamentos.add(lancam);
     }
 
-    public void criaLancamento(String categoria, LocalDate data, String meioDePagamento, String tipo, double valor){
-        Lancamento novoLancamento = new Lancamento(categoria, data, meioDePagamento, tipo, valor);
+    public void criaLancamento(String categoria, LocalDate data, String meioDeMovimentacao, String tipo, double valor){
+        Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);
         addLancamento(novoLancamento);
     }
 
