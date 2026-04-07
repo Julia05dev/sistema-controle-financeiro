@@ -42,15 +42,16 @@ public class Main {
                     //System.out.println("-------------------------------------------------------------");
                     String tipo = null;
                     String categoria = null;
+                    String meioDePagamento = null;
                     System.out.println("selecione a categoria:");  
                     switch(tp){
                         case 1:{    //receita
                             tipo = "receita";
                             System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
-                            int cA = scanner.nextInt();
+                            int catA = scanner.nextInt();
                             System.out.println("-------------------------------------------------------------");
 
-                            switch(cA){
+                            switch(catA){
                                 case 1:{
                                     categoria = "emprego";
                                     break;
@@ -64,14 +65,34 @@ public class Main {
                                     break;
                                 }
                             }
+
+                            //MEIO DE PAGAMENTO
+                            System.out.println("Selecione a forma de movimentacao:"); 
+                            System.out.println("1- Pix\n2- Transferencia\n3- Deposito");
+                            System.out.println();
+                            int c2 = scanner.nextInt();
+                            System.out.println("-------------------------------------------------------------");
+                            switch(c2){
+                                case 1:{
+                                    meioDePagamento = "pix";
+                                    break;
+                                }
+                                case 2:{
+                                    meioDePagamento = "transferencia";
+                                    break;
+                                }
+                                case 3:{
+                                    meioDePagamento = "deposito";
+                                }
+                            }
                             break;
                         }
                         case 2:{
                             tipo = "despesa";
                             System.out.println("1- Mercado\n2- Contas\n3- Beleza\n4- Lazer\n5- Farmacia\n");
-                            int cB = scanner.nextInt();
+                            int catB = scanner.nextInt();
                             System.out.println("-------------------------------------------------------------");
-                            switch(cB){
+                            switch(catB){
                                 case 1: {
                                     categoria = "mercado";
                                     break;
@@ -93,43 +114,40 @@ public class Main {
                                     break;
                                 }
                             }
+
+                            //MEIO DE PAGAMENTO
+                            System.out.println("Selecione o meio de pagamento:"); 
+                            System.out.println("1- Debito\n2- Credito");
+                            System.out.println();
+                            int c2 = scanner.nextInt();
+                            System.out.println("-------------------------------------------------------------");
+                            switch(c2){
+                                case 1:{
+                                    meioDePagamento = "debito";
+                                    break;
+                                }
+                                case 2:{
+                                    meioDePagamento = "credito";
+                                    break;
+                                }
+                            }
                             break;
                         }
                     }
 
                     //VALOR
                     System.out.println("valor (apenas o número sem nenhum símbolo):\n");  //tratar entradas erradas
-                    //System.out.println();
-                    double valor = scanner.nextDouble();    //NAO TA LENDO
+                    double valor = scanner.nextDouble();   
                     scanner.nextLine(); //consome o \n que fica no buffer
                     System.out.println();
-                    //scanner.nextLine();
                     
                     //DATA
                     System.out.println("Data (formato dd/MM/yyyy):");
                     System.out.println();
-                    //scanner.nextLine();
                     LocalDate data = lerData(scanner);   
                     System.out.println("-------------------------------------------------------------");
                     
-                    //MEIO DE PAGAMENTO --> so deveria aparecer caso seja despesa
-                    System.out.println("Selecione o meio de pagamento:"); 
-                    System.out.println("1- Debito\n2- Credito");
-                    System.out.println();
-                    int c2 = scanner.nextInt();
-                    System.out.println("-------------------------------------------------------------");
-                    String meioDePagamento = null;
-                    switch(c2){
-                        case 1:{
-                            meioDePagamento = "debito";
-                            break;
-                        }
-                        case 2:{
-                            meioDePagamento = "credito";
-                            break;
-                        }
-                    }
-    
+                    //criando o lançamento
                     carteira.criaLancamento(categoria, data, meioDePagamento, tipo, valor);
                     break;   
                 }
