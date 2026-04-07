@@ -22,16 +22,35 @@ public class Main {
         return data;
     }
 
-    public static int lerOpcao(int tamanho, Scanner scanner){
-        int opcao = scanner.nextInt();
+    public static int lerIntervalo(int max, int min, Scanner scanner){
+        int opcao = lerInt(scanner);
 
-        while(opcao > tamanho || opcao < 0){
-            System.out.println("Escolha uma opcao valida!");
-            opcao = scanner.nextInt();
-            scanner.nextLine();
+        while(opcao > max || opcao < min){
+            System.out.printf("Digite um valor entre %d e %d!\n", min, max);
+            opcao = lerInt(scanner);
         }
 
         return opcao;
+    }
+
+    public static int lerInt(Scanner scanner){
+        while(!scanner.hasNextInt()){
+            System.out.println("Digite um valor valido!");
+            scanner.next();
+        }
+
+        int valor = scanner.nextInt();
+        return valor;
+    }
+
+    public static double lerDouble(Scanner scanner){
+        while(!scanner.hasNextDouble()){
+            System.out.println("Digite um valor valido!");
+            scanner.next();
+        }
+
+        double valor = scanner.nextDouble();
+        return valor;
     }
     public static void main(String[] args) {
         Carteira carteira = new Carteira();
@@ -43,14 +62,14 @@ public class Main {
             ("ESCOLHA UMA OPÇÃO:\n1- fazer um lancamento\n2- remover um lancamento\n3- calcular saldo\n4- mostrar lancamentos\n5- filtrar lancamentos\n0- SAIR");
             System.out.println("-------------------------------------------------------------");
 
-            controle = lerOpcao(5, scanner);
+            controle = lerIntervalo(5, 0, scanner);
             switch(controle){
                 case 1:{
                     //TIPO (receita/despesa)
                     System.out.println("Selecione o tipo:"); 
                     System.out.println("1- Receita\n2- Despesa");
                     System.out.println();
-                    int tp = scanner.nextInt();
+                    int tp = lerIntervalo(2, 1, scanner);
                     String tipo = null;
                     String categoria = null;
                     String meioDeMovimentacao = null;
@@ -59,7 +78,7 @@ public class Main {
                         case 1:{    //receita
                             tipo = "receita";
                             System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
-                            int catA = scanner.nextInt();
+                            int catA = lerIntervalo(3, 1, scanner);
                             System.out.println("-------------------------------------------------------------");
 
                             switch(catA){
@@ -81,7 +100,7 @@ public class Main {
                             System.out.println("Selecione a forma de movimentacao:"); 
                             System.out.println("1- Pix\n2- Transferencia\n3- Deposito");
                             System.out.println();
-                            int c2 = scanner.nextInt();
+                            int c2 = lerIntervalo(3, 1, scanner);
                             System.out.println("-------------------------------------------------------------");
                             switch(c2){
                                 case 1:{
@@ -94,6 +113,7 @@ public class Main {
                                 }
                                 case 3:{
                                     meioDeMovimentacao = "deposito";
+                                    break;
                                 }
                             }
                             break;
@@ -101,7 +121,7 @@ public class Main {
                         case 2:{
                             tipo = "despesa";
                             System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
-                            int catB = scanner.nextInt();
+                            int catB = lerIntervalo(5, 1, scanner);
                             System.out.println("-------------------------------------------------------------");
                             switch(catB){
                                 case 1: {
@@ -130,7 +150,7 @@ public class Main {
                             System.out.println("Selecione a forma de movimentacao"); 
                             System.out.println("1- Debito\n2- Credito");
                             System.out.println();
-                            int c2 = scanner.nextInt();
+                            int c2 = lerIntervalo(2, 1, scanner);
                             System.out.println("-------------------------------------------------------------");
                             switch(c2){
                                 case 1:{
@@ -148,7 +168,7 @@ public class Main {
 
                     //VALOR
                     System.out.println("valor (apenas o número sem nenhum símbolo):\n"); 
-                    double valor = scanner.nextDouble();   
+                    double valor = lerDouble(scanner);   
                     scanner.nextLine(); 
                     System.out.println("-------------------------------------------------------------");
                     
@@ -164,7 +184,7 @@ public class Main {
                 case 2:{
                     if(carteira.mostraLancamentos()){
                         System.out.println("Informe o id do lancamento a ser removido:");
-                        int idRemove = scanner.nextInt();
+                        int idRemove = lerInt(scanner);
                         scanner.nextLine();
                         if(carteira.removeLancamento(idRemove)){
                             System.out.println("Lancamento removido com sucesso!");
@@ -188,31 +208,31 @@ public class Main {
                 }
                 case 4:{
                     if(!carteira.mostraLancamentos()){
-                        System.out.println("Nenhum lancamento cadatrado!"); 
+                        System.out.println("Nenhum lancamento cadastrado!"); 
                     }
                     break;
                 }
                 case 5:{
                     System.out.println("qual filtro voce deseja usar?");
                     System.out.println("1- pela data\n2- por mes e ano");
-                    int filtro = scanner.nextInt();
+                    int filtro = lerIntervalo(2, 1, scanner);
                     switch(filtro){
                         case 1:{
                             System.out.println("Por favor, informe:\nDia:");
-                            int dia = scanner.nextInt();
+                            int dia = lerIntervalo(31, 1, scanner);
                             System.out.println("Mes:");
-                            int mes = scanner.nextInt();
+                            int mes = lerIntervalo(12, 1, scanner);
                             System.out.println("Ano:");
-                            int ano = scanner.nextInt();
+                            int ano = lerInt(scanner);
 
                             carteira.filtraLancamentos(ano, mes, dia);
                             break;
                         }
                         case 2:{
                             System.out.println("Por favor, informe:\nMes:");
-                            int mes = scanner.nextInt();
+                            int mes = lerIntervalo(12, 1, scanner);
                             System.out.println("Ano:");
-                            int ano = scanner.nextInt();
+                            int ano = lerInt(scanner);
 
                             carteira.filtrarLancamentosMes(ano, mes);
                         }
