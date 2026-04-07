@@ -21,6 +21,18 @@ public class Main {
         }
         return data;
     }
+
+    public static int lerOpcao(int tamanho, Scanner scanner){
+        int opcao = scanner.nextInt();
+
+        while(opcao > tamanho || opcao < 0){
+            System.out.println("Escolha uma opcao valida!");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+        }
+
+        return opcao;
+    }
     public static void main(String[] args) {
         Carteira carteira = new Carteira();
         int controle;
@@ -31,8 +43,7 @@ public class Main {
             ("ESCOLHA UMA OPÇÃO:\n1- fazer um lancamento\n2- remover um lancamento\n3- calcular saldo\n4- mostrar lancamentos\n5- filtrar lancamentos\n0- SAIR");
             System.out.println("-------------------------------------------------------------");
 
-            controle = scanner.nextInt();
-            scanner.nextLine(); //consome o \n que fica no buffer
+            controle = lerOpcao(5, scanner);
             switch(controle){
                 case 1:{
                     //TIPO (receita/despesa)
@@ -90,7 +101,7 @@ public class Main {
                         }
                         case 2:{
                             tipo = "despesa";
-                            System.out.println("1- Mercado\n2- Contas\n3- Beleza\n4- Lazer\n5- Farmacia\n");
+                            System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
                             int catB = scanner.nextInt();
                             System.out.println("-------------------------------------------------------------");
                             switch(catB){
@@ -140,13 +151,12 @@ public class Main {
                     System.out.println("valor (apenas o número sem nenhum símbolo):\n");  //tratar entradas erradas
                     double valor = scanner.nextDouble();   
                     scanner.nextLine(); //consome o \n que fica no buffer
-                    System.out.println();
+                    System.out.println("-------------------------------------------------------------");
                     
                     //DATA
                     System.out.println("Data (formato dd/MM/yyyy):");
                     System.out.println();
                     LocalDate data = lerData(scanner);   
-                    System.out.println("-------------------------------------------------------------");
                     
                     //criando o lançamento
                     carteira.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
@@ -155,7 +165,7 @@ public class Main {
                 case 2:{
                     if(carteira.mostraLancamentos()){
                         System.out.println("Informe o id do lancamento a ser removido:");
-                        carteira.mostraLancamentos();
+                        //carteira.mostraLancamentos();
                         int idRemove = scanner.nextInt();
                         scanner.nextLine();
                         if(carteira.removeLancamento(idRemove)){

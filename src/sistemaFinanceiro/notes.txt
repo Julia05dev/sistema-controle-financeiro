@@ -5,3 +5,4 @@
 - ajustar o switch case pra não perguntar meio de pagamento em caso de receita ✓
 - acertar o toString pra não exibir meio de pagamento em caso de receita ✓
 - ta aceitando datas do tipo 31/06, 29/02, etc ✓
+- remover lancamento tb ta mostrando os lancamentos duplicados ✓
