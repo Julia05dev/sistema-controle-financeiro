@@ -1,5 +1,7 @@
 ✓
 
 - não estou tratando entradas erradas no switch case
-- ajustar o switch case pra não perguntar meio de pagamento em caso de receita
-- acertar o toString pra não exibir meio de pagamento em caso de receita
+- está mostrando o mesmo lançamento duas vezes (ta duplicado) ✓
+- ajustar o switch case pra não perguntar meio de pagamento em caso de receita ✓
+- acertar o toString pra não exibir meio de pagamento em caso de receita ✓
+- ta aceitando datas do tipo 31/06, 29/02, etc ✓

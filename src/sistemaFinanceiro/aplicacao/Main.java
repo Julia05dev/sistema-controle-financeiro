@@ -4,10 +4,11 @@ import sistemaFinanceiro.modelo.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 public class Main {
     public static LocalDate lerData (Scanner scanner){  
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
         LocalDate data = null;
         while(data == null){
             String input = scanner.nextLine();
@@ -116,7 +117,7 @@ public class Main {
                             }
 
                             //MEIO DE PAGAMENTO
-                            System.out.println("Selecione o meio de pagamento:"); 
+                            System.out.println("Selecione a forma de movimentacao"); 
                             System.out.println("1- Debito\n2- Credito");
                             System.out.println();
                             int c2 = scanner.nextInt();
@@ -180,12 +181,8 @@ public class Main {
                 case 4:{
                     if(!carteira.mostraLancamentos()){
                         System.out.println("Nenhum lancamento cadatrado!"); 
-                        break;
-                    }else{
-                        System.out.println("Seus lancamentos:");    //ta mostrando os lançamentos duas vezes
-                        carteira.mostraLancamentos();
-                        break;
                     }
+                    break;
                 }
                 case 5:{
                     System.out.println("qual filtro voce deseja usar?");
