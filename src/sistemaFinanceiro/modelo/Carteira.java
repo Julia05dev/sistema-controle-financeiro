@@ -70,9 +70,8 @@ public class Carteira {
                 System.out.println(l);
                 cont++;
             }
-             
+        }
         if(cont == 0)
             System.out.println("Nenhum lancamento nesse mes!");
-        }
     }
 }
