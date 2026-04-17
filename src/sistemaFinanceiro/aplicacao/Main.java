@@ -1,6 +1,5 @@
 package sistemaFinanceiro.aplicacao;
 import java.util.*;
-import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.servico.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -189,7 +188,7 @@ public class Main {
         }
     }
 
-    public static void calculandoSaldo(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
+    public static void calculandoSaldo(SistemaFinanceiro sistemaFinanceiro){
         double saldo = sistemaFinanceiro.calculaSaldo();
         System.out.format("Saldo atual: R$%.2f\n", saldo);
         System.out.println();
@@ -223,6 +222,7 @@ public class Main {
                 int ano = lerInt(scanner);
 
                 sistemaFinanceiro.filtrarLancamentosMes(ano, mes);
+                break;
             }
         }
     }
@@ -248,7 +248,7 @@ public class Main {
                     break;
                 }
                 case 3:{
-                    calculandoSaldo(sistemaFinanceiro, scanner);
+                    calculandoSaldo(sistemaFinanceiro);
                     break;
                 }
                 case 4:{
