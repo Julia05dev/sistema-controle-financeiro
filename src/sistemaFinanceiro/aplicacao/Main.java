@@ -53,8 +53,12 @@ public class Main {
         double valor = scanner.nextDouble();
         return valor;
     }
+
+    public static void cadastrandoLancamento(Scanner scanner){
+        //metodo vai estar aqui. A main começa em baixo, ou seja, estao na mesma classe mas em escopos diferentes 
+        //as variaveis foram incializadas na main
+    }
     public static void main(String[] args) {
-        //Carteira carteira = new Carteira();
         SistemaFinanceiro SistemaFinanceiro = new SistemaFinanceiro();
         int controle;
         Scanner scanner = new Scanner(System.in);   
