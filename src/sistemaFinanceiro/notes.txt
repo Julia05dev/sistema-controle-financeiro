@@ -1,4 +1,42 @@
 ✓
-V1 finalizada!
+PENDENTE -------------------------------------------------------------------------
 
-teste de commit
+PROXIMOS PASSOS ------------------------------------------------------------------
+
+- preencher SistemaFinanceiro
+- reduzir responsabilidades do Main
+- revisar responsabilidades de Carteira e Lancamento
+- limpar encapsulamento e uso de métodos
+
+- trocar String por enum
+- revisar construtor e mutabilidade de Lancamento
+- revisar toString
+- implementar equals/hashCode se fizer sentido por id
+- revisar uso de atributo estático para id
+
+- ampliar filtros simples
+- implementar filtros compostos
+- criar resumos financeiros
+- usar HashMap para agrupamentos reais
+
+- decidir se haverá herança Receita/Despesa
+- se houver, implementar com comportamento próprio
+- usar @Override onde fizer sentido
+- criar uma interface de estratégia de filtro ou resumo
+
+- padronizar tratamento de erro no terminal
+- criar exceções customizadas essenciais
+- melhorar mensagens e fluxo de recuperação
+
+- montar cenários de teste manual
+- depurar operações centrais
+
+- criar conversão lista → array
+- usar array de objetos para processamento auxiliar
+- usar split em alguma entrada mais rica
+- criar uma matriz de resumo mensal por categoria/tipo
+
+- revisar arquitetura para deixá-la pronta para crescer
+- não implementar threads no núcleo
+- deixar espaço para experimentos paralelos futuros
+

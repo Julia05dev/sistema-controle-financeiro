@@ -11,11 +11,6 @@ public class Carteira {
         lancamentos.add(lancam);
     }
 
-    public void criaLancamento(String categoria, LocalDate data, String meioDeMovimentacao, String tipo, double valor){
-        Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);
-        addLancamento(novoLancamento);
-    }
-
     public boolean removeLancamento(int id){
         if(id < 0)
             throw new IllegalArgumentException();
@@ -47,31 +42,27 @@ public class Carteira {
         }   
     }
 
-    public void filtraLancamentos(int ano, int mes, int dia){
-        LocalDate data = LocalDate.of(ano, mes, dia);
-        int cont = 0;
+    public List<Lancamento> loopFiltrarLancamentos(LocalDate data){
+        List<Lancamento> aux = new ArrayList<>();
 
         for (Lancamento l : lancamentos) {
             if(data.equals(l.getData())){
-                System.out.println(l);
-                cont ++;
+                aux.add(l);
             }
-                
         }
-        if(cont == 0)   
-            System.out.println("Nenhum lancamento nessa data!");
+        return aux;
     }
 
-    public void filtrarLancamentosMes(int ano, int mes){
-        int cont = 0;
-
+    public List<Lancamento> loopFiltrarLancamentos_mes(int ano, int mes){
+        List<Lancamento> aux = new ArrayList<>();
+        
         for (Lancamento l : lancamentos) {
             if((l.getData().getMonthValue() == mes && l.getData().getYear() == ano)){
-                System.out.println(l);
-                cont++;
+                aux.add(l);
             }
         }
-        if(cont == 0)
-            System.out.println("Nenhum lancamento nesse mes!");
+
+        return aux;
     }
+    
 }

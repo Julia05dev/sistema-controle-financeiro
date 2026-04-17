@@ -1,6 +1,7 @@
 package sistemaFinanceiro.aplicacao;
 import java.util.*;
 import sistemaFinanceiro.modelo.*;
+import sistemaFinanceiro.servico.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -53,7 +54,8 @@ public class Main {
         return valor;
     }
     public static void main(String[] args) {
-        Carteira carteira = new Carteira();
+        //Carteira carteira = new Carteira();
+        SistemaFinanceiro SistemaFinanceiro = new SistemaFinanceiro();
         int controle;
         Scanner scanner = new Scanner(System.in);   
         do{
@@ -178,15 +180,15 @@ public class Main {
                     LocalDate data = lerData(scanner);   
                     
                     //criando o lançamento
-                    carteira.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
+                    SistemaFinanceiro.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
                     break;   
                 }
                 case 2:{
-                    if(carteira.mostraLancamentos()){
+                    if(SistemaFinanceiro.mostraLancamentos()){
                         System.out.println("Informe o id do lancamento a ser removido:");
                         int idRemove = lerInt(scanner);
                         scanner.nextLine();
-                        if(carteira.removeLancamento(idRemove)){
+                        if(SistemaFinanceiro.removeLancamento(idRemove)){
                             System.out.println("Lancamento removido com sucesso!");
                             System.out.println();
                             break;
@@ -201,13 +203,13 @@ public class Main {
                     }
                 }
                 case 3:{
-                    double saldo = carteira.calculaSaldo();
+                    double saldo = SistemaFinanceiro.calculaSaldo();
                     System.out.format("Saldo atual: R$%.2f\n", saldo);
                     System.out.println();
                     break;
                 }
                 case 4:{
-                    if(!carteira.mostraLancamentos()){
+                    if(!SistemaFinanceiro.mostraLancamentos()){
                         System.out.println("Nenhum lancamento cadastrado!"); 
                     }
                     break;
@@ -225,7 +227,7 @@ public class Main {
                             System.out.println("Ano:");
                             int ano = lerInt(scanner);
 
-                            carteira.filtraLancamentos(ano, mes, dia);
+                            SistemaFinanceiro.filtrarLancamentos(ano, mes, dia);
                             break;
                         }
                         case 2:{
@@ -234,7 +236,7 @@ public class Main {
                             System.out.println("Ano:");
                             int ano = lerInt(scanner);
 
-                            carteira.filtrarLancamentosMes(ano, mes);
+                            SistemaFinanceiro.filtrarLancamentosMes(ano, mes);
                         }
                     }
                 }
