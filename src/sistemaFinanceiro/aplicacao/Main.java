@@ -65,24 +65,21 @@ public class Main {
         System.out.println("selecione a categoria:");  
 
         switch(tp){
-        case 1:{    //receita
+        case 1 -> {    //receita
             tipo = "receita";
             System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
             int catA = lerIntervalo(3, 1, scanner);
             System.out.println("-------------------------------------------------------------");
 
             switch(catA){
-                case 1:{
+                case 1 -> {
                     categoria = "emprego";
-                    break;
                 }
-                case 2:{
+                case 2 -> {
                     categoria = "freelance";
-                    break;
                 }
-                case 3:{
+                case 3 -> {
                     categoria = "presente";
-                    break;
                 }
             }
 
@@ -93,46 +90,37 @@ public class Main {
             int c2 = lerIntervalo(3, 1, scanner);
             System.out.println("-------------------------------------------------------------");
             switch(c2){
-                case 1:{
+                case 1 -> {
                     meioDeMovimentacao = "pix";
-                    break;
                 }
-                case 2:{
+                case 2 -> {
                     meioDeMovimentacao = "transferencia";
-                    break;
                 }
-                case 3:{
+                case 3 -> {
                     meioDeMovimentacao = "deposito";
-                    break;
                 }
             }
-            break;
         }
-        case 2:{
+        case 2 -> {
             tipo = "despesa";
             System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
             int catB = lerIntervalo(5, 1, scanner);
             System.out.println("-------------------------------------------------------------");
             switch(catB){
-                case 1: {
+                case 1 ->  {
                     categoria = "mercado";
-                    break;
                 }
-                case 2: {
+                case 2 ->  {
                     categoria = "contas";
-                    break;
                 }
-                case 3: {
+                case 3 ->  {
                     categoria = "beleza";
-                    break;
                 }
-                case 4: {
+                case 4 ->  {
                     categoria = "lazer";
-                    break;
                 }
-                case 5: {
+                case 5 ->  {
                     categoria = "farmacia";
-                    break;
                 }
             }
 
@@ -143,16 +131,13 @@ public class Main {
             int c2 = lerIntervalo(2, 1, scanner);
             System.out.println("-------------------------------------------------------------");
             switch(c2){
-                case 1:{
+                case 1 -> {
                     meioDeMovimentacao = "debito";
-                    break;
                 }
-                case 2:{
+                case 2 -> {
                     meioDeMovimentacao = "credito";
-                    break;
                 }
             }
-            break;
         }
     }
 
@@ -204,7 +189,7 @@ public class Main {
         System.out.println("1- pela data\n2- por mes e ano");
         int filtro = lerIntervalo(2, 1, scanner);
         switch(filtro){
-            case 1:{
+            case 1 -> {
                 System.out.println("Por favor, informe:\nDia:");
                 int dia = lerIntervalo(31, 1, scanner);
                 System.out.println("Mes:");
@@ -213,16 +198,14 @@ public class Main {
                 int ano = lerInt(scanner);
 
                 sistemaFinanceiro.filtrarLancamentos(ano, mes, dia);
-                break;
             }
-            case 2:{
+            case 2 -> {
                 System.out.println("Por favor, informe:\nMes:");
                 int mes = lerIntervalo(12, 1, scanner);
                 System.out.println("Ano:");
                 int ano = lerInt(scanner);
 
                 sistemaFinanceiro.filtrarLancamentosMes(ano, mes);
-                break;
             }
         }
     }
@@ -239,25 +222,20 @@ public class Main {
 
             controle = lerIntervalo(5, 0, scanner);
             switch(controle){
-                case 1:{
+                case 1 -> {
                     cadastrandoLancamento(sistemaFinanceiro, scanner);
-                    break;   
                 }
-                case 2:{
+                case 2 -> {
                     removendoLancamento(sistemaFinanceiro, scanner);
-                    break;
                 }
-                case 3:{
+                case 3 -> {
                     calculandoSaldo(sistemaFinanceiro);
-                    break;
                 }
-                case 4:{
+                case 4 -> {
                     mostrandoLancamentos(sistemaFinanceiro, scanner);
-                    break;
                 }
-                case 5:{
+                case 5 -> {
                     filtrandoLancamentos(sistemaFinanceiro, scanner);
-                    break;
                 }
             }
         }while(controle != 0);
