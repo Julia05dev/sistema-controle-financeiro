@@ -1,6 +1,7 @@
 package sistemaFinanceiro.aplicacao;
 import java.util.*;
 import sistemaFinanceiro.servico.*;
+import sistemaFinanceiro.modelo.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -157,7 +158,8 @@ public class Main {
     }
 
     public static void removendoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
-        if(sistemaFinanceiro.mostraLancamentos()){
+        if(!sistemaFinanceiro.mostraLancamentos().isEmpty()){
+            mostrandoLancamentos(sistemaFinanceiro, scanner);
             System.out.println("Informe o id do lancamento a ser removido:");
             int idRemove = lerInt(scanner);
             scanner.nextLine();
@@ -180,8 +182,13 @@ public class Main {
     }
 
     public static void mostrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
-        if(!sistemaFinanceiro.mostraLancamentos()){
+        if(sistemaFinanceiro.mostraLancamentos().isEmpty()){
             System.out.println("Nenhum lancamento cadastrado!"); 
+        }else{
+            List<Lancamento> lancamentos = sistemaFinanceiro.mostraLancamentos();
+            for (Lancamento l : lancamentos) {
+                System.out.println(l);
+            }
         }
     }
     public static void filtrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
@@ -197,7 +204,14 @@ public class Main {
                 System.out.println("Ano:");
                 int ano = lerInt(scanner);
 
-                sistemaFinanceiro.filtrarLancamentos(ano, mes, dia);
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarLancamentos(ano, mes, dia);
+                if(lancamentos.isEmpty()){
+                    System.out.println("Nenhum lancamento nessa data!");
+                }else{
+                    for (Lancamento l : lancamentos) {
+                        System.out.println(l);
+                    }
+                }
             }
             case 2 -> {
                 System.out.println("Por favor, informe:\nMes:");
@@ -205,7 +219,14 @@ public class Main {
                 System.out.println("Ano:");
                 int ano = lerInt(scanner);
 
-                sistemaFinanceiro.filtrarLancamentosMes(ano, mes);
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarLancamentosMes(ano, mes);
+                if(lancamentos.isEmpty()){
+                    System.out.println("Nenhum lancamento nessa data!");
+                }else{
+                    for (Lancamento l : lancamentos) {
+                        System.out.println(l);
+                    }
+                }
             }
         }
     }

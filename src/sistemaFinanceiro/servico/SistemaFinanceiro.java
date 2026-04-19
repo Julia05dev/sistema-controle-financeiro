@@ -7,7 +7,7 @@ import sistemaFinanceiro.modelo.*;
 public class SistemaFinanceiro{
     Carteira carteira = new Carteira();
 
-    public boolean mostraLancamentos(){
+    public List<Lancamento> mostraLancamentos(){
         return carteira.mostraLancamentos();
     }
 
@@ -23,31 +23,13 @@ public class SistemaFinanceiro{
         Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);
         carteira.addLancamento(novoLancamento);
     }
-
     
-    public void filtrarLancamentos(int ano, int mes, int dia){
+    public List<Lancamento> filtrarLancamentos(int ano, int mes, int dia){
         LocalDate data = LocalDate.of(ano, mes, dia);
-
-        List<Lancamento> resultado = carteira.loopFiltrarLancamentos(data); //variável que aponta pra lista já existente (tecnicamente nao cria outra lista)
-
-        if (resultado.isEmpty()) {
-            System.out.println("Nenhum lancamento nessa data!");
-        } else {
-            for (Lancamento l : resultado) {
-                System.out.println(l);
-            }
-        }
+        return carteira.loopFiltrarLancamentos(data); //variável que aponta pra lista já existente (tecnicamente nao cria outra lista)
     }
 
-    public void filtrarLancamentosMes(int ano, int mes){
-        List<Lancamento> resultado = carteira.loopFiltrarLancamentos_mes(ano, mes);
-
-        if(resultado.isEmpty()){
-            System.out.println("Nenhum lancamento nessa data!");
-        }else{
-            for (Lancamento l : resultado) {
-                System.out.println(l);
-            }
-        }
+    public List<Lancamento> filtrarLancamentosMes(int ano, int mes){
+        return carteira.loopFiltrarLancamentos_mes(ano, mes);
     }
 }

@@ -31,15 +31,13 @@ public class Carteira {
         return saldo;
     }
 
-    public boolean mostraLancamentos(){
-        if(lancamentos.isEmpty()){
-            return false;
-        }else{
-            for (Lancamento l : lancamentos) {
-                System.out.println(l);
-            }
-            return true;    
-        }   
+    public List<Lancamento> mostraLancamentos(){
+        List<Lancamento> resultado = new ArrayList<>();
+        for (Lancamento l : lancamentos) {
+            resultado.add(l);
+        }  
+
+        return resultado;
     }
 
     public List<Lancamento> loopFiltrarLancamentos(LocalDate data){
