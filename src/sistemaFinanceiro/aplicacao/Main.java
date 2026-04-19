@@ -214,12 +214,13 @@ public class Main {
                 }
             }
             case 2 -> {
-                System.out.println("Por favor, informe:\nMes:");
+                int dia = 1;
+                System.out.println("Mes:");
                 int mes = lerIntervalo(12, 1, scanner);
                 System.out.println("Ano:");
                 int ano = lerInt(scanner);
 
-                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarLancamentosMes(ano, mes);
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarLancamentosMes(ano, mes, dia);
                 if(lancamentos.isEmpty()){
                     System.out.println("Nenhum lancamento nessa data!");
                 }else{

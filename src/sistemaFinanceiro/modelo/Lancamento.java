@@ -14,15 +14,24 @@ public class Lancamento {
     public Lancamento(String categoria, LocalDate data, String meioDeMovimentacao, String tipo, double valor) {
         if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor == 0.0)
             throw new IllegalArgumentException();
-        contador++;
-        this.categoria = categoria;
-        this.data = data;
-        this.meioDeMovimentacao = meioDeMovimentacao;
-        this.tipo = tipo;
+        
+        if(categoria.isBlank() || tipo.isBlank() || meioDeMovimentacao.isBlank())
+            throw new IllegalArgumentException("favor nao deixar campos em branco");
+
         if(tipo.equalsIgnoreCase("receita"))
             this.valor = valor;
         else if(tipo.equalsIgnoreCase("despesa"))
             this.valor = -valor;
+        else{
+            throw new IllegalArgumentException("favor escolher apenas entre receita e despesa");
+        }
+
+        this.categoria = categoria;
+        this.data = data;
+        this.meioDeMovimentacao = meioDeMovimentacao;
+        this.tipo = tipo;
+
+        contador++;
         this.id = contador;
     }
     

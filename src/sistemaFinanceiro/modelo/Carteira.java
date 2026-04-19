@@ -51,11 +51,11 @@ public class Carteira {
         return aux;
     }
 
-    public List<Lancamento> loopFiltrarLancamentos_mes(int ano, int mes){
+    public List<Lancamento> loopFiltrarLancamentos_mes(LocalDate data){
         List<Lancamento> aux = new ArrayList<>();
         
         for (Lancamento l : lancamentos) {
-            if((l.getData().getMonthValue() == mes && l.getData().getYear() == ano)){
+            if((l.getData().getMonthValue() == data.getMonthValue() && l.getData().getYear() == data.getYear())){
                 aux.add(l);
             }
         }
