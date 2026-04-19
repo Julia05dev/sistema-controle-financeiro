@@ -40,7 +40,7 @@ public class Carteira {
         return resultado;
     }
 
-    public List<Lancamento> loopFiltrarLancamentos(LocalDate data){
+    public List<Lancamento> FiltrarLancamentos(LocalDate data){
         List<Lancamento> aux = new ArrayList<>();
 
         for (Lancamento l : lancamentos) {
@@ -51,7 +51,7 @@ public class Carteira {
         return aux;
     }
 
-    public List<Lancamento> loopFiltrarLancamentos_mes(LocalDate data){
+    public List<Lancamento> FiltrarLancamentos_mes(LocalDate data){
         List<Lancamento> aux = new ArrayList<>();
         
         for (Lancamento l : lancamentos) {

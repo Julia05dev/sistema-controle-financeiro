@@ -68,15 +68,9 @@ public class Lancamento {
     public String getCategoria() {
         return categoria;
     }
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
 
     public String getmeioDeMovimentacao() {
         return meioDeMovimentacao;
-    }
-    public void setmeioDeMovimentacao(String meioDeMovimentacao) {
-        this.meioDeMovimentacao = meioDeMovimentacao;
-    }    
+    } 
 
 }

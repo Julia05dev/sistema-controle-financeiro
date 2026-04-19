@@ -26,11 +26,11 @@ public class SistemaFinanceiro{
     
     public List<Lancamento> filtrarLancamentos(int ano, int mes, int dia){
         LocalDate data = LocalDate.of(ano, mes, dia);
-        return carteira.loopFiltrarLancamentos(data); //variável que aponta pra lista já existente (tecnicamente nao cria outra lista)
+        return carteira.FiltrarLancamentos(data); //variável que aponta pra lista já existente (tecnicamente nao cria outra lista)
     }
 
     public List<Lancamento> filtrarLancamentosMes(int ano, int mes, int dia){
         LocalDate data = LocalDate.of(ano, mes, dia);
-        return carteira.loopFiltrarLancamentos_mes(data);
+        return carteira.FiltrarLancamentos_mes(data);
     }
 }
