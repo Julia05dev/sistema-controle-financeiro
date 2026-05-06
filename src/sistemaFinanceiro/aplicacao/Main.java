@@ -100,7 +100,7 @@ public class Main {
                 }
             }
         }
-        case 2 -> {
+        case 2 -> { //despesa
             tipo = TipoLancamento.DESPESA;
             System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
             int catB = lerIntervalo(5, 1, scanner);
@@ -115,7 +115,7 @@ public class Main {
 
             //MEIO DE PAGAMENTO
             System.out.println("Selecione a forma de movimentacao"); 
-            System.out.println("1- Debito\n2- Credito");
+            System.out.println("1- Debito\n2- Credito\n3- Pix\n4- Dinheiro\n5- Transferencia");
             System.out.println();
             int c2 = lerIntervalo(2, 1, scanner);
             System.out.println("-------------------------------------------------------------");

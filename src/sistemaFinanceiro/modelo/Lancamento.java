@@ -6,16 +6,16 @@ import sistemaFinanceiro.modelo.enums.TipoLancamento;
 import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
 
 public class Lancamento {
-    private LocalDate data;
+    private final LocalDate data;
     private static int contador = 0;
-    private int id;
-    private double valor;
-    private TipoLancamento tipo; //receita ou despesa
-    private TipoCategoria categoria;
-    private TipoMovimentacao meioDeMovimentacao;
+    private final int id;
+    private final double valor;
+    private final TipoLancamento tipo; //receita ou despesa
+    private final TipoCategoria categoria;
+    private final TipoMovimentacao meioDeMovimentacao;
 
     public Lancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor) {
-        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor == 0.0)
+        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor <= 0.0)
             throw new IllegalArgumentException();
 
         switch(tipo){
