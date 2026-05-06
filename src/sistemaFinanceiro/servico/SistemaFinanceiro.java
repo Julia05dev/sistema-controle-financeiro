@@ -3,7 +3,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import sistemaFinanceiro.modelo.*;
+import sistemaFinanceiro.modelo.enums.TipoCategoria;
 import sistemaFinanceiro.modelo.enums.TipoLancamento;
+import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
 
 public class SistemaFinanceiro{
     Carteira carteira = new Carteira();
@@ -20,7 +22,7 @@ public class SistemaFinanceiro{
         return carteira.calculaSaldo();
     }
 
-    public void criaLancamento(String categoria, LocalDate data, String meioDeMovimentacao, TipoLancamento tipo, double valor){
+    public void criaLancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor){
         Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);
         carteira.addLancamento(novoLancamento);
     }
