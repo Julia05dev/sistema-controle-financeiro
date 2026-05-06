@@ -1,29 +1,30 @@
 package sistemaFinanceiro.modelo;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import sistemaFinanceiro.modelo.enums.TipoLancamento;
 
 public class Lancamento {
     private LocalDate data;
     private static int contador = 0;
     private int id;
     private double valor;
-    private String tipo; //receita ou despesa
+    private TipoLancamento tipo; //receita ou despesa
     private String categoria;
     private String meioDeMovimentacao;
 
-    public Lancamento(String categoria, LocalDate data, String meioDeMovimentacao, String tipo, double valor) {
+    public Lancamento(String categoria, LocalDate data, String meioDeMovimentacao, TipoLancamento tipo, double valor) {
         if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor == 0.0)
             throw new IllegalArgumentException();
         
-        if(categoria.isBlank() || tipo.isBlank() || meioDeMovimentacao.isBlank())
+        if(categoria.isBlank() || meioDeMovimentacao.isBlank())
             throw new IllegalArgumentException("favor nao deixar campos em branco");
 
-        if(tipo.equalsIgnoreCase("receita"))
-            this.valor = valor;
-        else if(tipo.equalsIgnoreCase("despesa"))
-            this.valor = -valor;
-        else{
-            throw new IllegalArgumentException("favor escolher apenas entre receita e despesa");
+        switch(tipo){
+            case RECEITA -> this.valor = valor;
+
+            case DESPESA -> this.valor = -valor;
+
+            default -> throw new IllegalArgumentException("favor selecionar entre receita ou despesa");
         }
 
         this.categoria = categoria;
@@ -61,7 +62,7 @@ public class Lancamento {
         return valor;
     }
 
-    public String getTipo() {
+    public TipoLancamento getTipo() {
         return tipo;
     }
 
