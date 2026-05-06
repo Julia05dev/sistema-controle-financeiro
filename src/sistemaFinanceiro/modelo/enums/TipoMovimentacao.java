@@ -2,5 +2,8 @@ package sistemaFinanceiro.modelo.enums;
 
 public enum TipoMovimentacao {
     DEBITO,
-    CREDITO
+    CREDITO,
+    PIX,
+    DINHEIRO,
+    TRANSFERENCIA
 }

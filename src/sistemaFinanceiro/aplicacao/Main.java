@@ -6,6 +6,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import sistemaFinanceiro.modelo.enums.TipoCategoria;
+import sistemaFinanceiro.modelo.enums.TipoLancamento;
+import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
 
 public class Main {
     public static LocalDate lerData (Scanner scanner){  
@@ -60,69 +63,54 @@ public class Main {
         System.out.println("1- Receita\n2- Despesa");
         System.out.println();
         int tp = lerIntervalo(2, 1, scanner);
-        String tipo = null;
-        String categoria = null;
-        String meioDeMovimentacao = null;
+        TipoLancamento tipo = null;
+        TipoCategoria categoria = null;
+        TipoMovimentacao meioDeMovimentacao = null;
+     System.out.println("-------------------------------------------------------------");
         System.out.println("selecione a categoria:");  
 
         switch(tp){
         case 1 -> {    //receita
-            tipo = "receita";
+            tipo = TipoLancamento.RECEITA;
             System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
             int catA = lerIntervalo(3, 1, scanner);
             System.out.println("-------------------------------------------------------------");
 
             switch(catA){
-                case 1 -> {
-                    categoria = "emprego";
-                }
-                case 2 -> {
-                    categoria = "freelance";
-                }
-                case 3 -> {
-                    categoria = "presente";
-                }
+                case 1 -> categoria = TipoCategoria.EMPREGO;
+                case 2 -> categoria = TipoCategoria.FREELANCE;
+                case 3 -> categoria = TipoCategoria.PRESENTE;
             }
 
             //MEIO DE PAGAMENTO
             System.out.println("Selecione a forma de movimentacao:"); 
-            System.out.println("1- Pix\n2- Transferencia\n3- Deposito");
+            System.out.println("1- Pix\n2- Dinheiro\n3- Transferencia");
             System.out.println();
             int c2 = lerIntervalo(3, 1, scanner);
             System.out.println("-------------------------------------------------------------");
             switch(c2){
                 case 1 -> {
-                    meioDeMovimentacao = "pix";
+                    meioDeMovimentacao = TipoMovimentacao.PIX;
                 }
                 case 2 -> {
-                    meioDeMovimentacao = "transferencia";
+                    meioDeMovimentacao = TipoMovimentacao.DINHEIRO;
                 }
                 case 3 -> {
-                    meioDeMovimentacao = "deposito";
+                    meioDeMovimentacao = TipoMovimentacao.TRANSFERENCIA;
                 }
             }
         }
         case 2 -> {
-            tipo = "despesa";
+            tipo = TipoLancamento.DESPESA;
             System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
             int catB = lerIntervalo(5, 1, scanner);
             System.out.println("-------------------------------------------------------------");
             switch(catB){
-                case 1 ->  {
-                    categoria = "mercado";
-                }
-                case 2 ->  {
-                    categoria = "contas";
-                }
-                case 3 ->  {
-                    categoria = "beleza";
-                }
-                case 4 ->  {
-                    categoria = "lazer";
-                }
-                case 5 ->  {
-                    categoria = "farmacia";
-                }
+                case 1 -> categoria = TipoCategoria.MERCADO;
+                case 2 -> categoria = TipoCategoria.CONTAS;
+                case 3 -> categoria = TipoCategoria.BELEZA;
+                case 4 -> categoria = TipoCategoria.LAZER;
+                case 5 -> categoria = TipoCategoria.FARMACIA;
             }
 
             //MEIO DE PAGAMENTO
@@ -132,12 +120,10 @@ public class Main {
             int c2 = lerIntervalo(2, 1, scanner);
             System.out.println("-------------------------------------------------------------");
             switch(c2){
-                case 1 -> {
-                    meioDeMovimentacao = "debito";
-                }
-                case 2 -> {
-                    meioDeMovimentacao = "credito";
-                }
+                case 1 -> 
+                    meioDeMovimentacao = TipoMovimentacao.DEBITO;
+                case 2 -> 
+                    meioDeMovimentacao = TipoMovimentacao.CREDITO;
             }
         }
     }
