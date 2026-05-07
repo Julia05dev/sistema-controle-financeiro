@@ -2,15 +2,25 @@ package sistemaFinanceiro.modelo.enums;
 
 public enum TipoCategoria {
    //receita
-    EMPREGO,
-    FREELANCE,
-    PRESENTE,
+    EMPREGO("Emprego"),
+    FREELANCE("Freelance"),
+    PRESENTE("Presente"),
     //despesa
-    MERCADO,
-    CONTAS,
-    BELEZA,
-    LAZER,
-    FARMACIA;
+    MERCADO("Mercado"),
+    CONTAS("Contas"),
+    BELEZA("Beleza"),
+    LAZER("Lazer"),
+    FARMACIA("Farmácia");
+    private final String descricao;
+
+    private TipoCategoria(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString(){
+        return descricao;
+    }
 
     public static TipoCategoria fromIntReceita(int opcao){
         switch(opcao){
@@ -29,5 +39,9 @@ public enum TipoCategoria {
             case 4 -> {return FARMACIA;}
             default -> {throw new IllegalArgumentException("Opcao invalida!");}
         }
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 }

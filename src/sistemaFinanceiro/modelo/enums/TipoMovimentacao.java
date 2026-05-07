@@ -1,11 +1,21 @@
 package sistemaFinanceiro.modelo.enums;
 
 public enum TipoMovimentacao {
-    DEBITO,
-    CREDITO,
-    PIX,
-    DINHEIRO,
-    TRANSFERENCIA;
+    DEBITO("Credito"),
+    CREDITO("Credito"),
+    PIX("Pix"),
+    DINHEIRO("Dinheiro"),
+    TRANSFERENCIA("Transferencia");
+    private final String descricao;
+
+    private TipoMovimentacao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString(){
+        return descricao;
+    }
 
     public static TipoMovimentacao fromIntReceita(int opcao){
         switch(opcao){
@@ -25,5 +35,9 @@ public enum TipoMovimentacao {
             case 5 -> {return TRANSFERENCIA;}
             default -> {throw new IllegalArgumentException("Opcao invalida!");}
         }
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 }
