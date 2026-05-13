@@ -1,6 +1,6 @@
 package sistemaFinanceiro.modelo.filtros;
 
-import sistemaFinanceiro.modelo.*;
+import sistemaFinanceiro.modelo.Lancamento;
 import sistemaFinanceiro.modelo.enums.*;
 
 public class FiltroPorTipo implements FiltroLancamento {
