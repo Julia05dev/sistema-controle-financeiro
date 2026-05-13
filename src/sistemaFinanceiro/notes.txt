@@ -1,43 +1,46 @@
 ✓
 PENDENTE -------------------------------------------------------------------------
-IMPLEMENTAR ENUMS NA MAIN
+Implementar enums na main ✓
+Organizar os scanners.nextline() -usados pra consumir buffer- só nos metodos de leitura
+    colocar os faltantes nos metodos (por ex lerInt())
+    remover os que ficarao duplicados pela main
 
 PROXIMOS PASSOS ------------------------------------------------------------------
 
-- preencher SistemaFinanceiro
-- reduzir responsabilidades do Main
-- revisar responsabilidades de Carteira e Lancamento
-- limpar encapsulamento e uso de métodos
+- preencher SistemaFinanceiro ✓
+- reduzir responsabilidades do Main 
+- revisar responsabilidades de Carteira e Lancamento ✓
+- limpar encapsulamento e uso de métodos ✓
 
-- trocar String por enum
-- revisar construtor e mutabilidade de Lancamento
-- revisar toString
-- implementar equals/hashCode se fizer sentido por id
-- revisar uso de atributo estático para id
+- trocar String por enum ✓
+- revisar construtor e mutabilidade de Lancamento ✓
+- revisar toString 
+- implementar equals/hashCode se fizer sentido por id 
+- revisar uso de atributo estático para id 
 
-- ampliar filtros simples
-- implementar filtros compostos
-- criar resumos financeiros
-- usar HashMap para agrupamentos reais
+- ampliar filtros simples 
+- implementar filtros compostos 
+- criar resumos financeiros 
+- usar HashMap para agrupamentos reais 
 
-- decidir se haverá herança Receita/Despesa
-- se houver, implementar com comportamento próprio
-- usar @Override onde fizer sentido
-- criar uma interface de estratégia de filtro ou resumo
+- decidir se haverá herança Receita/Despesa 
+- se houver, implementar com comportamento próprio 
+- usar @Override onde fizer sentido 
+- criar uma interface de estratégia de filtro ou resumo 
 
-- padronizar tratamento de erro no terminal
-- criar exceções customizadas essenciais
-- melhorar mensagens e fluxo de recuperação
+- padronizar tratamento de erro no terminal 
+- criar exceções customizadas essenciais 
+- melhorar mensagens e fluxo de recuperação 
 
-- montar cenários de teste manual
-- depurar operações centrais
+- montar cenários de teste manual 
+- depurar operações centrais 
 
-- criar conversão lista → array
-- usar array de objetos para processamento auxiliar
-- usar split em alguma entrada mais rica
-- criar uma matriz de resumo mensal por categoria/tipo
+- criar conversão lista → array 
+- usar array de objetos para processamento auxiliar 
+- usar split em alguma entrada mais rica 
+- criar uma matriz de resumo mensal por categoria/tipo 
 
-- revisar arquitetura para deixá-la pronta para crescer
-- não implementar threads no núcleo
-- deixar espaço para experimentos paralelos futuros
+- revisar arquitetura para deixá-la pronta para crescer 
+- não implementar threads no núcleo 
+- deixar espaço para experimentos paralelos futuros 
 

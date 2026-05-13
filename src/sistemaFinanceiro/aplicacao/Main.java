@@ -54,93 +54,94 @@ public class Main {
         }
 
         double valor = scanner.nextDouble();
+        //scanner.next();
         return valor;
     }
 
     public static void cadastrandoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
 
         System.out.println("Selecione o tipo:"); 
-        System.out.println("1- Receita\n2- Despesa");
+        System.out.println("1- " + TipoLancamento.RECEITA);
+        System.out.println("2- " + TipoLancamento.DESPESA);
+        //System.out.println("1- Receita\n2- Despesa");
         System.out.println();
         int tp = lerIntervalo(2, 1, scanner);
-        TipoLancamento tipo = null;
+        TipoLancamento tipo = TipoLancamento.fromInt(tp);
         TipoCategoria categoria = null;
         TipoMovimentacao meioDeMovimentacao = null;
-     System.out.println("-------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------");
         System.out.println("selecione a categoria:");  
 
-        switch(tp){
-        case 1 -> {    //receita
-            tipo = TipoLancamento.RECEITA;
-            System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
+  
+        if(tipo == TipoLancamento.RECEITA){
+            //System.out.println("\t1- emprego\n\t2- freelance\n\t3- presente\n");
+            System.out.println("1- " + TipoCategoria.EMPREGO);
+            System.out.println("2- " + TipoCategoria.FREELANCE);
+            System.out.println("3- " + TipoCategoria.PRESENTE);
+            System.out.println();
             int catA = lerIntervalo(3, 1, scanner);
             System.out.println("-------------------------------------------------------------");
-
-            switch(catA){
-                case 1 -> categoria = TipoCategoria.EMPREGO;
-                case 2 -> categoria = TipoCategoria.FREELANCE;
-                case 3 -> categoria = TipoCategoria.PRESENTE;
-            }
+            
+            categoria = TipoCategoria.fromIntReceita(catA);
 
             //MEIO DE PAGAMENTO
             System.out.println("Selecione a forma de movimentacao:"); 
-            System.out.println("1- Pix\n2- Dinheiro\n3- Transferencia");
+            //System.out.println("1- Pix\n2- Dinheiro\n3- Transferencia");
+            System.out.println("1- " + TipoMovimentacao.PIX);
+            System.out.println("2- " + TipoMovimentacao.DINHEIRO);
+            System.out.println("3- " + TipoMovimentacao.TRANSFERENCIA);
             System.out.println();
+
             int c2 = lerIntervalo(3, 1, scanner);
             System.out.println("-------------------------------------------------------------");
-            switch(c2){
-                case 1 -> {
-                    meioDeMovimentacao = TipoMovimentacao.PIX;
-                }
-                case 2 -> {
-                    meioDeMovimentacao = TipoMovimentacao.DINHEIRO;
-                }
-                case 3 -> {
-                    meioDeMovimentacao = TipoMovimentacao.TRANSFERENCIA;
-                }
-            }
+            meioDeMovimentacao = TipoMovimentacao.fromIntReceita(c2);
         }
-        case 2 -> { //despesa
-            tipo = TipoLancamento.DESPESA;
-            System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
+
+        else if(tipo == TipoLancamento.DESPESA){
+            //System.out.println("\t1- Mercado\n\t2- Contas\n\t3- Beleza\n\t4- Lazer\n\t5- Farmacia\n");
+            System.out.println("1- " + TipoCategoria.MERCADO);
+            System.out.println("2- " + TipoCategoria.CONTAS);
+            System.out.println("3- " + TipoCategoria.BELEZA);
+            System.out.println("4- " + TipoCategoria.LAZER);
+            System.out.println("5- " + TipoCategoria.FARMACIA);
+            System.out.println();
+
             int catB = lerIntervalo(5, 1, scanner);
             System.out.println("-------------------------------------------------------------");
-            switch(catB){
-                case 1 -> categoria = TipoCategoria.MERCADO;
-                case 2 -> categoria = TipoCategoria.CONTAS;
-                case 3 -> categoria = TipoCategoria.BELEZA;
-                case 4 -> categoria = TipoCategoria.LAZER;
-                case 5 -> categoria = TipoCategoria.FARMACIA;
-            }
+            categoria = TipoCategoria.fromIntDespesa(catB);
 
             //MEIO DE PAGAMENTO
             System.out.println("Selecione a forma de movimentacao"); 
-            System.out.println("1- Debito\n2- Credito\n3- Pix\n4- Dinheiro\n5- Transferencia");
+            //System.out.println("1- Debito\n2- Credito\n3- Pix\n4- Dinheiro\n5- Transferencia");
+            System.out.println("1- " + TipoMovimentacao.DEBITO);
+            System.out.println("2- " + TipoMovimentacao.CREDITO);
+            System.out.println("3- " + TipoMovimentacao.PIX);
+            System.out.println("4- " + TipoMovimentacao.DINHEIRO);
+            System.out.println("5- " + TipoMovimentacao.TRANSFERENCIA);
             System.out.println();
-            int c2 = lerIntervalo(2, 1, scanner);
-            System.out.println("-------------------------------------------------------------");
-            switch(c2){
-                case 1 -> 
-                    meioDeMovimentacao = TipoMovimentacao.DEBITO;
-                case 2 -> 
-                    meioDeMovimentacao = TipoMovimentacao.CREDITO;
-            }
-        }
-    }
 
-    //VALOR
-    System.out.println("valor (apenas o número sem nenhum símbolo):\n"); 
-    double valor = lerDouble(scanner);   
-    scanner.nextLine(); 
-    System.out.println("-------------------------------------------------------------");
-    
-    //DATA
-    System.out.println("Data (formato dd/MM/yyyy):");
-    System.out.println();
-    LocalDate data = lerData(scanner);   
-    
-    //criando o lançamento
-    sistemaFinanceiro.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
+            int c2 = lerIntervalo(5, 1, scanner);
+            System.out.println("-------------------------------------------------------------");
+            meioDeMovimentacao = TipoMovimentacao.fromIntDespesa(c2);
+        }
+
+        //VALOR
+        System.out.println("valor (apenas o número sem nenhum símbolo):\n"); 
+        double valor = lerDouble(scanner);   
+        while(valor < 0){
+            System.out.println("favor digitar o valor sem símbolos!");
+            valor = lerDouble(scanner);
+        }
+        scanner.nextLine(); 
+        System.out.println("-------------------------------------------------------------");
+        
+        //DATA
+        System.out.println("Data (formato dd/MM/yyyy):");
+        System.out.println();
+        LocalDate data = lerData(scanner);   
+        
+        //criando o lançamento
+        sistemaFinanceiro.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
     }
 
     public static void removendoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){

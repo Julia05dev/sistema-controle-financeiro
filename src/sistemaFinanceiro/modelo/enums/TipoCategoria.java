@@ -36,7 +36,8 @@ public enum TipoCategoria {
             case 1 -> {return MERCADO;}
             case 2-> {return CONTAS;}
             case 3 -> {return BELEZA;}
-            case 4 -> {return FARMACIA;}
+            case 4 -> {return LAZER;}
+            case 5 -> {return FARMACIA;}
             default -> {throw new IllegalArgumentException("Opcao invalida!");}
         }
     }

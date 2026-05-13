@@ -1,7 +1,7 @@
 package sistemaFinanceiro.modelo.enums;
 
 public enum TipoMovimentacao {
-    DEBITO("Credito"),
+    DEBITO("Debito"),
     CREDITO("Credito"),
     PIX("Pix"),
     DINHEIRO("Dinheiro"),
