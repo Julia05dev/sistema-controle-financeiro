@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import sistemaFinanceiro.modelo.*;
+import sistemaFinanceiro.modelo.filtros.*;
 import sistemaFinanceiro.modelo.enums.TipoCategoria;
 import sistemaFinanceiro.modelo.enums.TipoLancamento;
 import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
@@ -26,6 +27,8 @@ public class SistemaFinanceiro{
         Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);
         carteira.addLancamento(novoLancamento);
     }
+
+    //agora preciso tirar esses métodos e substituilos pelos filtros que criei com a interface. Cada filtro tem seu proprio metodo
     
     public List<Lancamento> filtrarLancamentos(int ano, int mes, int dia){
         LocalDate data = LocalDate.of(ano, mes, dia);
