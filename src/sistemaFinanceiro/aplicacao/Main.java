@@ -244,7 +244,7 @@ public class Main {
                 System.out.println("Mes:");
                 int mes = lerIntervalo(12, 1, scanner);
                 System.out.println("Ano:");
-                int ano = lerInt(scanner);
+                int ano = lerIntervalo(Integer.MAX_VALUE, 1, scanner);;
                 System.out.println();
 
                 List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorData(dia, mes, ano);
