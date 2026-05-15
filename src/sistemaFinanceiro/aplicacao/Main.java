@@ -178,20 +178,82 @@ public class Main {
             }
         }
     }
+
+    //metodo auxiliar pra definir categoria (a depender do tipo)
+    public static TipoCategoria escolherCategoria(Scanner scanner, TipoLancamento tipo){
+        System.out.println("selecione a categoria desejada");
+        if(tipo == TipoLancamento.RECEITA){
+            System.out.println("1- " + TipoCategoria.EMPREGO);
+            System.out.println("2- " + TipoCategoria.FREELANCE);
+            System.out.println("3- " + TipoCategoria.PRESENTE);
+            System.out.println();
+
+            int categoria = lerIntervalo(3, 1, scanner);
+            //System.out.println("-------------------------------------------------------------");
+            return TipoCategoria.fromIntReceita(categoria);
+        }else{
+            System.out.println("1- " + TipoCategoria.MERCADO);
+            System.out.println("2- " + TipoCategoria.CONTAS);
+            System.out.println("3- " + TipoCategoria.BELEZA);
+            System.out.println("4- " + TipoCategoria.LAZER);
+            System.out.println("5- " + TipoCategoria.FARMACIA);
+            System.out.println();
+
+            int categoria = lerIntervalo(5, 1, scanner);
+            //System.out.println("-------------------------------------------------------------");
+            return TipoCategoria.fromIntDespesa(categoria);
+        }
+    }
+
+    //metodo auxiliar pra definir o meio de movimentacao (a depender do tipo)
+    public static TipoMovimentacao escolherMovimentacao(Scanner scanner, TipoLancamento tipo){
+        System.out.println("selecione o meio de movimentaçao desejado");
+        if(tipo == TipoLancamento.RECEITA){
+            System.out.println("1- " + TipoMovimentacao.PIX);
+            System.out.println("2- " + TipoMovimentacao.DINHEIRO);
+            System.out.println("3- " + TipoMovimentacao.TRANSFERENCIA);
+            System.out.println();
+
+            int movimentacao = lerIntervalo(3, 1, scanner);
+            //System.out.println("-------------------------------------------------------------");
+            return TipoMovimentacao.fromIntReceita(movimentacao);
+        }else{
+            System.out.println("1- " + TipoMovimentacao.DEBITO);
+            System.out.println("2- " + TipoMovimentacao.CREDITO);
+            System.out.println("3- " + TipoMovimentacao.PIX);
+            System.out.println("4- " + TipoMovimentacao.DINHEIRO);
+            System.out.println("5- " + TipoMovimentacao.TRANSFERENCIA);
+            System.out.println();
+
+            int movimentacao = lerIntervalo(5, 1, scanner);
+            //System.out.println("-------------------------------------------------------------");
+            return TipoMovimentacao.fromIntDespesa(movimentacao);
+        }
+    }
+
     public static void filtrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
         System.out.println("qual filtro voce deseja usar?");
-        System.out.println("1- pela data\n2- por mes e ano");
-        int filtro = lerIntervalo(2, 1, scanner);
+        System.out.println("1- data\n2- tipo\n3- categoria\n4- movimentaçao");
+        int filtro = lerIntervalo(4, 1, scanner);
+        System.out.println();
+
+        System.out.println("selecione o tipo de lancamento");
+        System.out.println("1- " + TipoLancamento.RECEITA);
+        System.out.println("2- " + TipoLancamento.DESPESA);
+        System.out.println();
+        int tp = lerIntervalo(2, 1, scanner);
+
         switch(filtro){
             case 1 -> {
-                System.out.println("Por favor, informe:\nDia:");
+                System.out.println("Por favor, informe:\nDia:");    //nao ta funcionando
                 int dia = lerIntervalo(31, 1, scanner);
                 System.out.println("Mes:");
                 int mes = lerIntervalo(12, 1, scanner);
                 System.out.println("Ano:");
                 int ano = lerInt(scanner);
+                System.out.println();
 
-                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarLancamentos(ano, mes, dia);
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorData(dia, mes, ano);
                 if(lancamentos.isEmpty()){
                     System.out.println("Nenhum lancamento nessa data!");
                 }else{
@@ -201,21 +263,39 @@ public class Main {
                 }
             }
             case 2 -> {
-                int dia = 1;
-                System.out.println("Mes:");
-                int mes = lerIntervalo(12, 1, scanner);
-                System.out.println("Ano:");
-                int ano = lerInt(scanner);
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorTipo(TipoLancamento.fromInt(tp));
+                if(lancamentos.isEmpty())
+                    System.out.println("nenhuma " + TipoLancamento.fromInt(tp) + " cadastrada");
+                else{
+                    for (Lancamento l : lancamentos) { 
+                        System.out.println(l);
+                    }
+                }
+            }
+            case 3 -> {
+                TipoCategoria categoria = escolherCategoria(scanner, TipoLancamento.fromInt(tp));
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorCategoria(categoria);
 
-                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarLancamentosMes(ano, mes, dia);
-                if(lancamentos.isEmpty()){
-                    System.out.println("Nenhum lancamento nessa data!");
-                }else{
+                if(lancamentos.isEmpty())
+                    System.out.println("nenhuma " + TipoLancamento.fromInt(tp) + " cadastrada nessa categoria.");
+                else{
+                    for(Lancamento l : lancamentos)
+                        System.out.println(l);
+                }
+            }
+            case 4-> {
+                TipoMovimentacao movimentacao = escolherMovimentacao(scanner, TipoLancamento.fromInt(tp));
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorMovimentacao(movimentacao);
+
+                if(lancamentos.isEmpty())
+                    System.out.println("nenhuma " + TipoLancamento.fromInt(tp) + " cadastrada com esse meio de movimentaçao.");
+                else{
                     for (Lancamento l : lancamentos) {
                         System.out.println(l);
                     }
                 }
             }
+
         }
     }
 

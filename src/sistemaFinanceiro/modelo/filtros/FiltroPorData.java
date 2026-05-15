@@ -2,7 +2,7 @@ package sistemaFinanceiro.modelo.filtros;
 
 import sistemaFinanceiro.modelo.Lancamento;
 import java.time.*;
-import java.time.format.*;
+//import java.time.format.*;
 
 public class FiltroPorData implements FiltroLancamento{
     private final int dia, mes, ano;
@@ -16,10 +16,10 @@ public class FiltroPorData implements FiltroLancamento{
     public boolean filtrar(Lancamento lancamento){
         //validando data completa (se for informada)
         if(dia != 0 && mes != 0 && ano != 0){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
-            try{
-                LocalDate.parse(dia + "/" + mes + "/" + ano, formatter);
-            }catch(DateTimeParseException e){
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
+            try {
+                LocalDate.of(ano, mes, dia);
+            } catch (DateTimeException e) {
                 return false;
             }
         }
