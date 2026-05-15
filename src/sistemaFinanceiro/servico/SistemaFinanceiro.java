@@ -28,32 +28,29 @@ public class SistemaFinanceiro{
         carteira.addLancamento(novoLancamento);
     }
 
-    //agora preciso tirar esses métodos e substituilos pelos filtros que criei com a interface. Cada filtro tem seu proprio metodo
-    //FILTROS
-
     //------------FILTROS------------
 
     //data
     public List<Lancamento> filtrarPorData(int dia, int mes, int ano){
-        FiltroPorData filtro = new FiltroPorData(dia, mes, ano);
+        FiltroLancamento filtro = new FiltroPorData(dia, mes, ano);
         return carteira.filtrarLancamentos(filtro);
     }
 
     //tipo
     public List<Lancamento> filtrarPorTipo(TipoLancamento tipo){
-        FiltroPorTipo filtro = new FiltroPorTipo(tipo);
+        FiltroLancamento filtro = new FiltroPorTipo(tipo);
         return carteira.filtrarLancamentos(filtro);
     }
     
     //categoria
     public List<Lancamento> filtrarPorCategoria(TipoCategoria categoria){
-        FiltroPorCategoria filtro = new FiltroPorCategoria(categoria);
+        FiltroLancamento filtro = new FiltroPorCategoria(categoria);
         return carteira.filtrarLancamentos(filtro);
     }
 
     //movimentacao
     public List<Lancamento> filtrarPorMovimentacao(TipoMovimentacao movimentacao){
-        FiltroPorMovimentacao filtro = new FiltroPorMovimentacao(movimentacao);
+        FiltroLancamento filtro = new FiltroPorMovimentacao(movimentacao);
         return carteira.filtrarLancamentos(filtro);
     } 
 }
