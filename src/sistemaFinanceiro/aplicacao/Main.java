@@ -128,7 +128,7 @@ public class Main {
         //VALOR
         System.out.println("valor (apenas o número sem nenhum símbolo):\n"); 
         double valor = lerDouble(scanner);   
-        while(valor < 0){
+        while(valor <= 0){
             System.out.println("favor digitar o valor sem símbolos!");
             valor = lerDouble(scanner);
         }
@@ -148,7 +148,7 @@ public class Main {
         if(!sistemaFinanceiro.mostraLancamentos().isEmpty()){
             mostrandoLancamentos(sistemaFinanceiro, scanner);
             System.out.println("Informe o id do lancamento a ser removido:");
-            int idRemove = lerInt(scanner);
+            int idRemove = lerIntervalo(Integer.MAX_VALUE, 1, scanner);;
             scanner.nextLine();
             if(sistemaFinanceiro.removeLancamento(idRemove)){
                 System.out.println("Lancamento removido com sucesso!");
@@ -237,15 +237,9 @@ public class Main {
         int filtro = lerIntervalo(4, 1, scanner);
         System.out.println();
 
-        System.out.println("selecione o tipo de lancamento");
-        System.out.println("1- " + TipoLancamento.RECEITA);
-        System.out.println("2- " + TipoLancamento.DESPESA);
-        System.out.println();
-        int tp = lerIntervalo(2, 1, scanner);
-
         switch(filtro){
             case 1 -> {
-                System.out.println("Por favor, informe:\nDia:");    //nao ta funcionando
+                System.out.println("Por favor, informe:\nDia:");    
                 int dia = lerIntervalo(31, 1, scanner);
                 System.out.println("Mes:");
                 int mes = lerIntervalo(12, 1, scanner);
@@ -263,6 +257,11 @@ public class Main {
                 }
             }
             case 2 -> {
+                System.out.println("selecione o tipo de lancamento");
+                System.out.println("1- " + TipoLancamento.RECEITA);
+                System.out.println("2- " + TipoLancamento.DESPESA);
+                System.out.println();
+                int tp = lerIntervalo(2, 1, scanner);
                 List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorTipo(TipoLancamento.fromInt(tp));
                 if(lancamentos.isEmpty())
                     System.out.println("nenhuma " + TipoLancamento.fromInt(tp) + " cadastrada");
@@ -273,6 +272,12 @@ public class Main {
                 }
             }
             case 3 -> {
+                System.out.println("selecione o tipo de lancamento");
+                System.out.println("1- " + TipoLancamento.RECEITA);
+                System.out.println("2- " + TipoLancamento.DESPESA);
+                System.out.println();
+                int tp = lerIntervalo(2, 1, scanner);
+
                 TipoCategoria categoria = escolherCategoria(scanner, TipoLancamento.fromInt(tp));
                 List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorCategoria(categoria);
 
@@ -284,8 +289,14 @@ public class Main {
                 }
             }
             case 4-> {
+                System.out.println("selecione o tipo de lancamento");
+                System.out.println("1- " + TipoLancamento.RECEITA);
+                System.out.println("2- " + TipoLancamento.DESPESA);
+                System.out.println();
+                int tp = lerIntervalo(2, 1, scanner);
+
                 TipoMovimentacao movimentacao = escolherMovimentacao(scanner, TipoLancamento.fromInt(tp));
-                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorMovimentacao(movimentacao);
+                List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorMovimentacao(TipoLancamento.fromInt(tp), movimentacao);
 
                 if(lancamentos.isEmpty())
                     System.out.println("nenhuma " + TipoLancamento.fromInt(tp) + " cadastrada com esse meio de movimentaçao.");

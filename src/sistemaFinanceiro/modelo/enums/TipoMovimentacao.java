@@ -40,4 +40,16 @@ public enum TipoMovimentacao {
     public String getDescricao() {
         return descricao;
     }
+
+    public boolean aceitaTipo(TipoLancamento tipo) {
+        if (tipo == TipoLancamento.RECEITA) {
+            return this == PIX || this == DINHEIRO || this == TRANSFERENCIA;
+        }
+
+        if (tipo == TipoLancamento.DESPESA) {
+            return this == DEBITO || this == CREDITO || this == PIX || this == DINHEIRO || this == TRANSFERENCIA;
+        }
+
+        return false;
+    }
 }

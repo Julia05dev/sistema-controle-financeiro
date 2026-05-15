@@ -49,8 +49,8 @@ public class SistemaFinanceiro{
     }
 
     //movimentacao
-    public List<Lancamento> filtrarPorMovimentacao(TipoMovimentacao movimentacao){
-        FiltroLancamento filtro = new FiltroPorMovimentacao(movimentacao);
+    public List<Lancamento> filtrarPorMovimentacao(TipoLancamento tipo, TipoMovimentacao movimentacao){
+        FiltroLancamento filtro = new FiltroPorMovimentacao(tipo, movimentacao);
         return carteira.filtrarLancamentos(filtro);
     } 
 }

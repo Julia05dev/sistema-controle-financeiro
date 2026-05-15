@@ -1,20 +1,23 @@
 package sistemaFinanceiro.modelo.enums;
 
 public enum TipoCategoria {
-   //receita
-    EMPREGO("Emprego"),
-    FREELANCE("Freelance"),
-    PRESENTE("Presente"),
+    //receita
+    EMPREGO("Emprego", TipoLancamento.RECEITA),
+    FREELANCE("Freelance", TipoLancamento.RECEITA),
+    PRESENTE("Presente", TipoLancamento.RECEITA),
     //despesa
-    MERCADO("Mercado"),
-    CONTAS("Contas"),
-    BELEZA("Beleza"),
-    LAZER("Lazer"),
-    FARMACIA("Farmácia");
+    MERCADO("Mercado", TipoLancamento.DESPESA),
+    CONTAS("Contas", TipoLancamento.DESPESA),
+    BELEZA("Beleza", TipoLancamento.DESPESA),
+    LAZER("Lazer", TipoLancamento.DESPESA),
+    FARMACIA("Farmácia", TipoLancamento.DESPESA);
+
+    private final TipoLancamento tipoLancamento;
     private final String descricao;
 
-    private TipoCategoria(String descricao) {
+    private TipoCategoria(String descricao, TipoLancamento tipoLancamento) {
         this.descricao = descricao;
+        this.tipoLancamento = tipoLancamento;
     }
 
     @Override
@@ -44,5 +47,9 @@ public enum TipoCategoria {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public boolean aceitaTipo(TipoLancamento tipo) {
+        return this.tipoLancamento == tipo;
     }
 }

@@ -18,6 +18,14 @@ public class Lancamento {
         if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor <= 0.0)
             throw new IllegalArgumentException();
 
+        if (!categoria.aceitaTipo(tipo)) {
+            throw new IllegalArgumentException("categoria incompatível com o tipo de lançamento.");
+        }
+
+        if (!meioDeMovimentacao.aceitaTipo(tipo)) {
+            throw new IllegalArgumentException("meio de movimentação incompatível com o tipo de lançamento.");
+        }
+
         switch(tipo){
             case RECEITA -> this.valor = valor;
             case DESPESA -> this.valor = -valor;
