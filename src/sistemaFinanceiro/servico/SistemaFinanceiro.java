@@ -31,13 +31,29 @@ public class SistemaFinanceiro{
     //agora preciso tirar esses métodos e substituilos pelos filtros que criei com a interface. Cada filtro tem seu proprio metodo
     //FILTROS
 
-    public List<Lancamento> filtrarPorData(int ano, int mes, int dia){
-        LocalDate data = LocalDate.of(ano, mes, dia);
-        return carteira.FiltrarLancamentos(data); //variável que aponta pra lista já existente (tecnicamente nao cria outra lista)
+    //------------FILTROS------------
+
+    //data
+    public List<Lancamento> filtrarPorData(int dia, int mes, int ano){
+        FiltroPorData filtro = new FiltroPorData(dia, mes, ano);
+        return carteira.filtrarLancamentos(filtro);
     }
 
-    public List<Lancamento> filtrarLancamentosMes(int ano, int mes, int dia){
-        LocalDate data = LocalDate.of(ano, mes, dia);
-        return carteira.FiltrarLancamentos_mes(data);
+    //tipo
+    public List<Lancamento> filtrarPorTipo(TipoLancamento tipo){
+        FiltroPorTipo filtro = new FiltroPorTipo(tipo);
+        return carteira.filtrarLancamentos(filtro);
     }
+    
+    //categoria
+    public List<Lancamento> filtrarPorCategoria(TipoCategoria categoria){
+        FiltroPorCategoria filtro = new FiltroPorCategoria(categoria);
+        return carteira.filtrarLancamentos(filtro);
+    }
+
+    //movimentacao
+    public List<Lancamento> filtrarPorMovimentacao(TipoMovimentacao movimentacao){
+        FiltroPorMovimentacao filtro = new FiltroPorMovimentacao(movimentacao);
+        return carteira.filtrarLancamentos(filtro);
+    } 
 }
