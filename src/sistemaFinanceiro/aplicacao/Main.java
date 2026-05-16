@@ -148,7 +148,7 @@ public class Main {
         if(!sistemaFinanceiro.mostraLancamentos().isEmpty()){
             mostrandoLancamentos(sistemaFinanceiro, scanner);
             System.out.println("Informe o id do lancamento a ser removido:");
-            int idRemove = lerIntervalo(Integer.MAX_VALUE, 1, scanner);;
+            int idRemove = lerIntervalo(Integer.MAX_VALUE, 1, scanner);
             scanner.nextLine();
             if(sistemaFinanceiro.removeLancamento(idRemove)){
                 System.out.println("Lancamento removido com sucesso!");
@@ -244,7 +244,7 @@ public class Main {
                 System.out.println("Mes:");
                 int mes = lerIntervalo(12, 1, scanner);
                 System.out.println("Ano:");
-                int ano = lerIntervalo(Integer.MAX_VALUE, 1, scanner);;
+                int ano = lerIntervalo(Integer.MAX_VALUE, 1, scanner);
                 System.out.println();
 
                 List<Lancamento> lancamentos = sistemaFinanceiro.filtrarPorData(dia, mes, ano);

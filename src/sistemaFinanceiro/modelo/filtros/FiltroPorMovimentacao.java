@@ -6,7 +6,7 @@ import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
 
 public class FiltroPorMovimentacao implements FiltroLancamento{
     private final TipoLancamento tipo;
-    public final TipoMovimentacao movimentacao;
+    private final TipoMovimentacao movimentacao;
     public FiltroPorMovimentacao(TipoLancamento tipo, TipoMovimentacao movimentacao){
         this.tipo = tipo;
         this.movimentacao = movimentacao;
