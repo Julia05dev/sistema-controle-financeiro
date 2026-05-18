@@ -10,9 +10,25 @@ public class LerArquivoTxt {
 
         Scanner lerArquivo = new Scanner(entradaArquivos, "UTF-8");
 
+        List<Pessoa> pessoas = new ArrayList<>();
+
         while(lerArquivo.hasNext()){
             String linha = lerArquivo.nextLine();
-            System.out.println(linha);
+
+            if(linha != null && !linha.isEmpty()){
+                String[] dados = linha.split("\\;");
+
+                Pessoa pessoa = new Pessoa();
+                pessoa.setNome(dados[0]);
+                pessoa.setIdade(Integer.parseInt(dados[1]));
+                pessoa.setEmail(dados[2]);
+
+                pessoas.add(pessoa);
+            }
         }
+
+        for (Pessoa p : pessoas) {
+            System.out.println(p);
+        }   
     }
 }

@@ -1,17 +1,15 @@
 package sistemaFinanceiro.arquivos;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Arquivos {
-    public static void main(String[] args) throws IOException{
-        File arquivo = new File("C:\\Users\\User\\Desktop\\Sistema financeiro\\src\\sistemaFinanceiro\\arquivos\\arq.csv");
+public class ApachePoi {
+    public static void main(String[] args) throws Exception{
+        File file = new File("C:\\Users\\User\\Desktop\\Sistema financeiro\\src\\sistemaFinanceiro\\arquivos\\arquivo_excel.xls");
+        if(!file.exists())
+            file.createNewFile();
 
-        if(!arquivo.exists())
-            arquivo.createNewFile();
-        
         Pessoa pessoa1 = new Pessoa();
         Pessoa pessoa2 = new Pessoa();
         Pessoa pessoa3 = new Pessoa();
@@ -28,17 +26,11 @@ public class Arquivos {
         pessoa3.setEmail("zeRuela@gmail");
         pessoa3.setIdade(14);
 
-        FileWriter escreverNoArquivo = new FileWriter(arquivo);
-
         List<Pessoa> pessoas = new ArrayList<>();
         pessoas.add(pessoa1);
         pessoas.add(pessoa2);
         pessoas.add(pessoa3);
 
-        for (Pessoa p : pessoas) 
-            escreverNoArquivo.write(p.getNome() + ";" + p.getIdade() + ";" + p.getEmail() + "\n");
         
-        escreverNoArquivo.flush();
-        escreverNoArquivo.close();
     }
 }

@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "lib\\poi-ooxml-5.5.1.jar",
+        "c:\\Users\\User\\Desktop\\Sistema financeiro\\lib\\poi-ooxml-5.5.1.jar"
+    ]
+}

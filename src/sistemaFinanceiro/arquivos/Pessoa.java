@@ -5,6 +5,11 @@ public class Pessoa {
     String nome;
     String email;
 
+    @Override
+    public String toString() {
+        return "Pessoa [idade=" + idade + ", nome=" + nome + ", email=" + email + "]";
+    }
+    
     public int getIdade() {
         return idade;
     }
