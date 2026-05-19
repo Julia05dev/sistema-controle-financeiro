@@ -36,7 +36,7 @@ public class Arquivos {
         pessoas.add(pessoa3);
 
         for (Pessoa p : pessoas) 
-            escreverNoArquivo.write(p.getNome() + ";" + p.getIdade() + ";" + p.getEmail() + "\n");
+            escreverNoArquivo.write(p.getNome() + ";" + p.getEmail() + ";" + p.getIdade() +"\n");
         
         escreverNoArquivo.flush();
         escreverNoArquivo.close();

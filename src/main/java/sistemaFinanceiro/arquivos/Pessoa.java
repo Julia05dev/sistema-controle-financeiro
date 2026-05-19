@@ -1,15 +1,14 @@
 package sistemaFinanceiro.arquivos;
 
 public class Pessoa {
-    int idade;
     String nome;
     String email;
-
+    int idade;
+    
     @Override
     public String toString() {
-        return "Pessoa [idade=" + idade + ", nome=" + nome + ", email=" + email + "]";
+        return "Pessoa [nome=" + nome + ", email=" + email + ", idade=" + idade + "]";
     }
-    
     public int getIdade() {
         return idade;
     }

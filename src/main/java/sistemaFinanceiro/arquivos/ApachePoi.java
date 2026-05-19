@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.*;
 
 public class ApachePoi {
     public static void main(String[] args) throws Exception{
-        File file = new File("C:\\Users\\User\\Desktop\\Sistema financeiro\\src\\main\\java\\sistemaFinanceiro\\arquivos\\arquivo_excel.xls");
+        File file = new File("C:\\Users\\User\\Desktop\\Sistema financeiro\\src\\main\\java\\sistemaFinanceiro\\arquivos\\arquivo_excel.xlsx");
         if(!file.exists())
             file.createNewFile();
 
