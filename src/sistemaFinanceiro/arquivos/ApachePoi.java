@@ -3,6 +3,8 @@ package sistemaFinanceiro.arquivos;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 
 public class ApachePoi {
     public static void main(String[] args) throws Exception{
@@ -31,6 +33,30 @@ public class ApachePoi {
         pessoas.add(pessoa2);
         pessoas.add(pessoa3);
 
-        
+        HSSFWorkbook hssfWorkbook = new HSSFWorkbook();             
+        HSSFSheet linhaPessoa = hssfWorkbook.createSheet(" Planilha de pessoas treinamento");
+
+        int numLinha = 0;
+        for (Pessoa p : pessoas) {
+            Row linha = linhaPessoa.createRow(numLinha ++); //cria a linha na planilha --> cada linha é uma pessoa
+            int celula = 0;
+
+            Cell cellNome = linha.createCell(celula++);
+            cellNome.setCellValue(p.getNome());
+
+            Cell cellEmail = linha.createCell(celula++);
+            cellEmail.setCellValue(p.getEmail());
+
+            Cell cellIdade = linha.createCell(celula++);
+            cellIdade.setCellValue(p.getIdade());
+        } //terminou de montar a planilha
+
+        FileOutputStream saida = new FileOutputStream(file);
+        hssfWorkbook.write(saida);  //escreve a saida em arquivo
+
+        saida.flush();
+        saida.close();
+
+        System.out.println("planilha foi criada!");
     }
 }
