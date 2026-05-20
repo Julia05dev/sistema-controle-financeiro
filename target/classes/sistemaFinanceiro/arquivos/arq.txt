@@ -1,3 +1,0 @@
-Julia;20;julia@gmail
-Alexandre;20;amordaminhavida@gmail
-Bernardo;14;zeRuela@gmail
