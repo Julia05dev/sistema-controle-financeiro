@@ -21,8 +21,8 @@ public class ApachePoiEditando {
 
             int numCells = linha.getPhysicalNumberOfCells();
 
-            Cell celula = linha.createCell(numCells);
-            celula.setCellValue("5487,40");
+            String valorCelula = linha.getCell(0).getStringCellValue();
+            linha.getCell(0).setCellValue(valorCelula + "valor gravado na aula");
         }
 
         entrada.close();

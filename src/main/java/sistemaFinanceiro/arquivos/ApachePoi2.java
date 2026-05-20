@@ -27,7 +27,7 @@ public class ApachePoi2 {
                         pessoa.setNome(cell.getStringCellValue());
                     }
                     case 1 ->{
-                        pessoa.setEmail(cell.getStringCellValue());
+                        pessoa.setEmail(cell.getStringCellValue()); 
                     }
                     case 2 ->{
                         pessoa.setIdade(Double.valueOf(cell.getNumericCellValue()).intValue());
