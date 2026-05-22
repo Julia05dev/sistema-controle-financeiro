@@ -21,6 +21,8 @@ public class PersistenciaCSV {
         
         FileWriter escrita = new FileWriter(arquivo);
 
+        escrita.write("id;tipo;categoria;valor;data;movimentacao");
+        escrita.write("\n");
         for (Lancamento l : lancamentos) {
             escrita.write(converterLancamentoPraLinhaCSV(l));
             escrita.write("\n");
