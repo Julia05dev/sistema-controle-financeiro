@@ -28,6 +28,8 @@ public class SistemaFinanceiro{
         carteira.addLancamento(novoLancamento);
     }
 
+    //criaLancamentoAPartirDeCSV(List<lancamento>) --> faz um loop e chama buscaPorID. Se nao existir, add na carteira. Se existir pula
+
     //------------FILTROS------------
 
     //data

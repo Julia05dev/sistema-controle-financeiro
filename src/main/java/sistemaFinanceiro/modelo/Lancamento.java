@@ -2,9 +2,7 @@ package sistemaFinanceiro.modelo;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-import sistemaFinanceiro.modelo.enums.TipoCategoria;
-import sistemaFinanceiro.modelo.enums.TipoLancamento;
-import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
+import sistemaFinanceiro.modelo.enums.*;
 
 public class Lancamento {
     private final LocalDate data;
