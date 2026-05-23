@@ -9,10 +9,18 @@ import sistemaFinanceiro.persistencia.*;
 import sistemaFinanceiro.modelo.filtros.*;
 
 public class SistemaFinanceiro{
-    Carteira carteira = new Carteira();
-    PersistenciaCSV persistencia = new PersistenciaCSV();
+    private Carteira carteira;
+    private PersistenciaCSV persistencia;
 
-    public List<Lancamento> mostraLancamentos(){
+    public SistemaFinanceiro() throws IOException{
+        this.carteira = new Carteira();
+        this.persistencia = new PersistenciaCSV();
+        carteira.addListaLancamentos(persistencia.carregarCsvPraLista());
+    }
+    //Carteira carteira = new Carteira();
+    //PersistenciaCSV persistencia = new PersistenciaCSV();
+
+    public List<Lancamento> mostraLancamentos() throws IOException{
         return carteira.mostraLancamentos();
     }
 

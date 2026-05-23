@@ -172,7 +172,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void mostrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
+    public static void mostrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws IOException{
         if(sistemaFinanceiro.mostraLancamentos().isEmpty()){
             System.out.println("Nenhum lancamento cadastrado!"); 
         }else{

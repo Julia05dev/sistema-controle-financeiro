@@ -41,7 +41,8 @@ public class PersistenciaCSV {
         }
             
         BufferedReader lerLinha = new BufferedReader(new FileReader(arquivo));
-        String linha = lerLinha.readLine(); //ignora o cabeçalho
+        lerLinha.readLine(); //ignora o cabeçalho
+        String linha = lerLinha.readLine();
 
         while(linha != null){
             if(!linha.trim().isEmpty())
@@ -53,11 +54,11 @@ public class PersistenciaCSV {
         return lancamentos;
     }
 
-    public Lancamento converteLinhaCsvPraLancamento(String linhaCsv){
+    public Lancamento converteLinhaCsvPraLancamento(String linhaCsv) throws IOException{
         String[] elementos = linhaCsv.split("\\;", -1);
         //id - tipo - categoria - valor - data - meio de movimentacao
-
-        int id = Integer.parseInt(elementos[0]);    //tenho que rever a logica do ID
+        
+        int id = Integer.parseInt(elementos[0]);    //tem que ajustar o id (fica reiniciando sempre q fecha o codigo e gera id duplicado)
         TipoLancamento tipo = TipoLancamento.valueOf(elementos[1]);
         TipoCategoria categoria = TipoCategoria.valueOf(elementos[2]);
         double valor = Math.abs(Double.parseDouble(elementos[3]));
@@ -67,6 +68,7 @@ public class PersistenciaCSV {
         TipoMovimentacao movimentacao = TipoMovimentacao.valueOf(elementos[5]);
 
         Lancamento lancamento = new Lancamento(id, categoria, data, movimentacao, tipo, valor);
+
         return lancamento;
     }
 }

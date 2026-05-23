@@ -6,6 +6,13 @@ import sistemaFinanceiro.modelo.filtros.*;
 public class Carteira {
     private final List<Lancamento> lancamentos = new ArrayList<>(); //final deixa claro que a carteira sempre trabalha com a mesma lista
     private final HashMap<Integer, Lancamento> lancamentoId = new HashMap<>();
+    
+    public void addListaLancamentos(List<Lancamento> addLancamentos){
+        for (Lancamento l : addLancamentos) {
+            this.lancamentos.add(l);
+            this.lancamentoId.put(l.getId(), l);
+        }
+    }
 
     public void addLancamento(Lancamento lancam){
         if(lancam == null)
