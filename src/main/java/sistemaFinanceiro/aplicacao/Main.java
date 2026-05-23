@@ -8,6 +8,7 @@ import sistemaFinanceiro.modelo.enums.TipoLancamento;
 import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
 import sistemaFinanceiro.servico.*;
 
+import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -61,7 +62,7 @@ public class Main {
         return valor;
     }
 
-    public static void cadastrandoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
+    public static void cadastrandoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws IOException{
 
         System.out.println("Selecione o tipo:"); 
         System.out.println("1- " + TipoLancamento.RECEITA);
@@ -147,7 +148,7 @@ public class Main {
         sistemaFinanceiro.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
     }
 
-    public static void removendoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner){
+    public static void removendoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws IOException{
         if(!sistemaFinanceiro.mostraLancamentos().isEmpty()){
             mostrandoLancamentos(sistemaFinanceiro, scanner);
             System.out.println("Informe o id do lancamento a ser removido:");
@@ -313,7 +314,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         SistemaFinanceiro sistemaFinanceiro = new SistemaFinanceiro();
         int controle;
         Scanner scanner = new Scanner(System.in);   

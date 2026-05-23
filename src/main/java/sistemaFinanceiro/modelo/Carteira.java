@@ -1,6 +1,6 @@
 package sistemaFinanceiro.modelo;
-import java.util.*;
 
+import java.util.*;
 import sistemaFinanceiro.modelo.filtros.*;
 
 public class Carteira {

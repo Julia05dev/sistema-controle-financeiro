@@ -7,15 +7,9 @@ import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.modelo.enums.*;
 
 public class PersistenciaCSV {
-    File arquivo = new File("persistencia/lancamentos.csv");    //conferir se o caminho funciona
+    File arquivo = new File("C:\\Users\\User\\Desktop\\Sistema financeiro\\src\\main\\java\\sistemaFinanceiro\\persistencia\\lancamentos.csv");    //conferir se o caminho funciona
 
-    public String converterLancamentoPraLinhaCSV(Lancamento l){
-        String linhaCsv = String.valueOf(l.getId()) + ";" + l.getTipo().name() + ";" + l.getCategoria().name() + ";" + String.valueOf(l.getValor()) 
-                            + ";" + l.getData().toString() + ";" + l.getmeioDeMovimentacao().name();
-        return linhaCsv;
-    }
-    
-    public void salvar(List<Lancamento> lancamentos) throws Exception{
+    public void salvar(List<Lancamento> lancamentos) throws IOException{
         if(!arquivo.exists())
             arquivo.createNewFile();
         
@@ -30,7 +24,13 @@ public class PersistenciaCSV {
         escrita.close();
     }
 
-    public List<Lancamento> carregarCsvPraLista() throws Exception{
+    public String converterLancamentoPraLinhaCSV(Lancamento l){
+        String linhaCsv = String.valueOf(l.getId()) + ";" + l.getTipo().name() + ";" + l.getCategoria().name() + ";" + String.valueOf(l.getValor()) 
+                            + ";" + l.getData().toString() + ";" + l.getmeioDeMovimentacao().name();
+        return linhaCsv;
+    }
+
+    public List<Lancamento> carregarCsvPraLista() throws IOException{
         if(!arquivo.exists())
             System.out.println("arquivo inexistente!");
         List<Lancamento> lancamentos = new ArrayList<>();
@@ -40,7 +40,6 @@ public class PersistenciaCSV {
             return lancamentos;
         }
             
-
         BufferedReader lerLinha = new BufferedReader(new FileReader(arquivo));
         String linha = lerLinha.readLine(); //ignora o cabeçalho
 
@@ -58,32 +57,16 @@ public class PersistenciaCSV {
         String[] elementos = linhaCsv.split("\\;", -1);
         //id - tipo - categoria - valor - data - meio de movimentacao
 
-        //int id = Integer.parseInt(elementos[0]);    //tenho que rever a logica do ID
+        int id = Integer.parseInt(elementos[0]);    //tenho que rever a logica do ID
         TipoLancamento tipo = TipoLancamento.valueOf(elementos[1]);
         TipoCategoria categoria = TipoCategoria.valueOf(elementos[2]);
-        double valor = Double.parseDouble(elementos[3]);
+        double valor = Math.abs(Double.parseDouble(elementos[3]));
 
         LocalDate data =  LocalDate.parse(elementos[4]);
 
         TipoMovimentacao movimentacao = TipoMovimentacao.valueOf(elementos[5]);
 
-        Lancamento lancamento = new Lancamento(categoria, data, movimentacao, tipo, valor);
+        Lancamento lancamento = new Lancamento(id, categoria, data, movimentacao, tipo, valor);
         return lancamento;
     }
-
-    /*converterLinhaCsvParaLancamento
-- recebe 1 linha String do CSV
-- faz split(";", -1)
-- converte id, enum, valor e data
-- cria um Lancamento
-- retorna esse Lancamento */
-
-/*carregarListaDoCsv
-- abre o arquivo
-- lê linha por linha
-- ignora o cabeçalho
-- chama converterLinhaCsvParaLancamento
-- adiciona cada Lancamento numa List
-- retorna a List<Lancamento> */
-
 }

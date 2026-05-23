@@ -1,31 +1,36 @@
 package sistemaFinanceiro.servico;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 import sistemaFinanceiro.modelo.*;
-import sistemaFinanceiro.modelo.enums.TipoCategoria;
-import sistemaFinanceiro.modelo.enums.TipoLancamento;
-import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
+import sistemaFinanceiro.modelo.enums.*;
+import sistemaFinanceiro.persistencia.*;
 import sistemaFinanceiro.modelo.filtros.*;
 
 public class SistemaFinanceiro{
     Carteira carteira = new Carteira();
+    PersistenciaCSV persistencia = new PersistenciaCSV();
 
     public List<Lancamento> mostraLancamentos(){
         return carteira.mostraLancamentos();
     }
 
-    public boolean removeLancamento(int id){
-        return carteira.removeLancamento(id);
+    public boolean removeLancamento(int id) throws IOException{
+        boolean remove = carteira.removeLancamento(id);
+        if(remove)
+            persistencia.salvar(carteira.mostraLancamentos());
+        return remove;
     }
 
     public double calculaSaldo(){
         return carteira.calculaSaldo();
     }
 
-    public void criaLancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor){
+    public void criaLancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor) throws IOException{
         Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);
         carteira.addLancamento(novoLancamento);
+        persistencia.salvar(carteira.mostraLancamentos());
     }
 
     //criaLancamentoAPartirDeCSV(List<lancamento>) --> faz um loop e chama buscaPorID. Se nao existir, add na carteira. Se existir pula
