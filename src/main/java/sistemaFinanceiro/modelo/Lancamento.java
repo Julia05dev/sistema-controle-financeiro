@@ -61,7 +61,10 @@ public class Lancamento {
         this.data = data;
         this.meioDeMovimentacao = meioDeMovimentacao;
         this.tipo = tipo;
+        
         this.id = id;
+        if(id > contador)
+            contador = id;
     }
     
     @Override
