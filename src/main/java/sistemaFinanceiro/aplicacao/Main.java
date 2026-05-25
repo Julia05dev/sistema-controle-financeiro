@@ -314,35 +314,39 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException{
-        SistemaFinanceiro sistemaFinanceiro = new SistemaFinanceiro();
-        int controle;
-        Scanner scanner = new Scanner(System.in);   
-        do{
-            System.out.println("-------------------------------------------------------------");
-            System.out.println
-            ("ESCOLHA UMA OPÇÃO:\n1- fazer um lancamento\n2- remover um lancamento\n3- calcular saldo\n4- mostrar lancamentos\n5- filtrar lancamentos\n0- SAIR");
-            System.out.println("-------------------------------------------------------------");
+    public static void main(String[] args){
+        try{
+            SistemaFinanceiro sistemaFinanceiro = new SistemaFinanceiro();
+            int controle;
+            Scanner scanner = new Scanner(System.in);   
+            do{
+                System.out.println("-------------------------------------------------------------");
+                System.out.println
+                ("ESCOLHA UMA OPÇÃO:\n1- fazer um lancamento\n2- remover um lancamento\n3- calcular saldo\n4- mostrar lancamentos\n5- filtrar lancamentos\n0- SAIR");
+                System.out.println("-------------------------------------------------------------");
 
-            controle = lerIntervalo(5, 0, scanner);
-            switch(controle){
-                case 1 -> {
-                    cadastrandoLancamento(sistemaFinanceiro, scanner);
+                controle = lerIntervalo(5, 0, scanner);
+                switch(controle){
+                    case 1 -> {
+                        cadastrandoLancamento(sistemaFinanceiro, scanner);
+                    }
+                    case 2 -> {
+                        removendoLancamento(sistemaFinanceiro, scanner);
+                    }
+                    case 3 -> {
+                        calculandoSaldo(sistemaFinanceiro);
+                    }
+                    case 4 -> {
+                        mostrandoLancamentos(sistemaFinanceiro, scanner);
+                    }
+                    case 5 -> {
+                        filtrandoLancamentos(sistemaFinanceiro, scanner);
+                    }
                 }
-                case 2 -> {
-                    removendoLancamento(sistemaFinanceiro, scanner);
-                }
-                case 3 -> {
-                    calculandoSaldo(sistemaFinanceiro);
-                }
-                case 4 -> {
-                    mostrandoLancamentos(sistemaFinanceiro, scanner);
-                }
-                case 5 -> {
-                    filtrandoLancamentos(sistemaFinanceiro, scanner);
-                }
-            }
-        }while(controle != 0);
-        scanner.close();
+            }while(controle != 0);
+            scanner.close();
+        }catch(IOException e){
+            System.out.println("Erro ao acessar arquivo de lançamentos!");
+        }
     }
 }

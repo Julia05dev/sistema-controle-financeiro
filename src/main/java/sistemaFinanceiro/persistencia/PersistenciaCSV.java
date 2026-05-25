@@ -13,15 +13,14 @@ public class PersistenciaCSV {
         if(!arquivo.exists())
             arquivo.createNewFile();
         
-        FileWriter escrita = new FileWriter(arquivo);
-
-        escrita.write("id;tipo;categoria;valor;data;movimentacao");
-        escrita.write("\n");
-        for (Lancamento l : lancamentos) {
-            escrita.write(converterLancamentoPraLinhaCSV(l));
+        try(FileWriter escrita = new FileWriter(arquivo)){  //usando try-with-resources pra nao precisar ficar fechando o arquivo manualmente
+            escrita.write("id;tipo;categoria;valor;data;movimentacao");
             escrita.write("\n");
+            for (Lancamento l : lancamentos) {
+                escrita.write(converterLancamentoPraLinhaCSV(l));
+                escrita.write("\n");
+            }
         }
-        escrita.close();
     }
 
     public String converterLancamentoPraLinhaCSV(Lancamento l){
@@ -40,23 +39,25 @@ public class PersistenciaCSV {
             return lancamentos;
         }
             
-        BufferedReader lerLinha = new BufferedReader(new FileReader(arquivo));
-        lerLinha.readLine(); //ignora o cabeçalho
-        String linha = lerLinha.readLine();
+        try(BufferedReader lerLinha = new BufferedReader(new FileReader(arquivo))){
+            lerLinha.readLine(); //ignora o cabeçalho
+            String linha = lerLinha.readLine();
 
-        while(linha != null){
-            if(!linha.trim().isEmpty())
-                lancamentos.add(converteLinhaCsvPraLancamento(linha));
-            
-            linha = lerLinha.readLine();
+            while(linha != null){
+                if(!linha.trim().isEmpty())
+                    lancamentos.add(converteLinhaCsvPraLancamento(linha));
+                
+                linha = lerLinha.readLine();
+            }
         }
-        lerLinha.close();
         return lancamentos;
     }
 
     public Lancamento converteLinhaCsvPraLancamento(String linhaCsv) throws IOException{
         String[] elementos = linhaCsv.split("\\;", -1);
         //id - tipo - categoria - valor - data - meio de movimentacao
+        if(elementos.length != 6)
+            throw new IllegalArgumentException("Linha csv inválida: " + linhaCsv);
         
         int id = Integer.parseInt(elementos[0]);    //tem que ajustar o id (fica reiniciando sempre q fecha o codigo e gera id duplicado)
         TipoLancamento tipo = TipoLancamento.valueOf(elementos[1]);
