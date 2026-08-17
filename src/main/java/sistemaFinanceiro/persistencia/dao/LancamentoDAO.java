@@ -80,4 +80,23 @@ public class LancamentoDAO {
         }
     }
 
+    private static final String SQL_EXCLUIR_POR_ID = 
+        "DELETE FROM lancamento " +
+        "WHERE id = ?";
+    
+    public boolean excluirPorId(int id) throws SQLException{
+        if(id <=0)
+            throw new IllegalArgumentException("id nao pode ser menor que 1.");
+
+        try(PreparedStatement statement = connection.prepareStatement(SQL_EXCLUIR_POR_ID)){
+            statement.setInt(1, id);
+            int linhasAfetadas = statement.executeUpdate();  //retorna um int informando quantas linhas foram afetadas
+            connection.commit();
+
+            return linhasAfetadas > 0;  //se nao afetou nenhuma retorna falso
+        }catch(SQLException e){
+            connection.rollback();
+            throw e;
+        }
+    }
 }
