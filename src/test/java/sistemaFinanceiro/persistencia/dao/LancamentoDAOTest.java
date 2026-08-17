@@ -108,4 +108,36 @@ class LancamentoDAOTest {
                                despesaRecuperada.getmeioDeMovimentacao())
         );
     }
+    @Test
+    void deveExcluirLancamentoExistente() throws SQLException {
+        Lancamento lancamento = new Lancamento(
+            TipoCategoria.MERCADO,
+            LocalDate.of(2026, 8, 17),
+            TipoMovimentacao.DEBITO,
+            TipoLancamento.DESPESA,
+            100.00
+        );
+
+        int idGerado = dao.inserir(lancamento);
+
+        boolean excluiu = dao.excluirPorId(idGerado);
+
+        assertTrue(excluiu);
+        assertTrue(dao.listarTodos().isEmpty());
+    }
+
+    @Test
+    void deveRetornarFalsoQuandoIdNaoExistir() throws SQLException {
+        boolean excluiu = dao.excluirPorId(Integer.MAX_VALUE);
+
+        assertFalse(excluiu);
+    }
+
+    @Test
+    void deveRejeitarIdInvalido() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> dao.excluirPorId(0)
+        );
+    }
 }
