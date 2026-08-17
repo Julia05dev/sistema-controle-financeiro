@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.*;
+import sistemaFinanceiro.modelo.enums.*;
 import sistemaFinanceiro.modelo.Lancamento;
 
 public class LancamentoDAO {
@@ -41,6 +44,36 @@ public class LancamentoDAO {
                 return idGerado;    //o bd que gera o id e manda pro codigo
             }
 
+        }catch(SQLException e){
+            connection.rollback();
+            throw e;
+        }
+    }
+    
+    private static final String SQL_LISTAR_TODOS = 
+        "SELECT id, data_lancamento, valor, tipo, categoria, meio_de_movimentacao " +
+        "FROM LANCAMENTO " +
+        "ORDER BY id";
+
+    public List<Lancamento> listarTodos() throws SQLException{
+        List<Lancamento> lancamentos = new ArrayList<>();
+
+        try(PreparedStatement statement = connection.prepareStatement(SQL_LISTAR_TODOS)){
+            try(ResultSet resultado = statement.executeQuery()){
+                while(resultado.next()){
+                    int id = resultado.getInt("id");
+                    LocalDate data = resultado.getObject("data_lancamento", LocalDate.class);
+                    double valor = resultado.getBigDecimal("valor").doubleValue();
+                    TipoLancamento tipo = TipoLancamento.valueOf(resultado.getString("tipo"));
+                    TipoCategoria categoria = TipoCategoria.valueOf(resultado.getString("categoria"));
+                    TipoMovimentacao movimentacao = TipoMovimentacao.valueOf(resultado.getString("meio_de_movimentacao"));
+
+                    Lancamento lancamento = new Lancamento(id, categoria, data, movimentacao, tipo, valor);
+                    lancamentos.add(lancamento);
+                }
+            }
+            connection.commit();
+            return lancamentos;
         }catch(SQLException e){
             connection.rollback();
             throw e;

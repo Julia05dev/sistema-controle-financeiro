@@ -40,31 +40,31 @@ public class Lancamento {
         this.id = contador;
     }
     public Lancamento(int id, TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor) {
-    if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor <= 0.0)
-        throw new IllegalArgumentException();
+        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor <= 0.0)
+            throw new IllegalArgumentException();
 
-    if (!categoria.aceitaTipo(tipo)) {
-        throw new IllegalArgumentException("categoria incompatível com o tipo de lançamento.");
-    }
+        if (!categoria.aceitaTipo(tipo)) {
+            throw new IllegalArgumentException("categoria incompatível com o tipo de lançamento.");
+        }
 
-    if (!meioDeMovimentacao.aceitaTipo(tipo)) {
-        throw new IllegalArgumentException("meio de movimentação incompatível com o tipo de lançamento.");
-    }
+        if (!meioDeMovimentacao.aceitaTipo(tipo)) {
+            throw new IllegalArgumentException("meio de movimentação incompatível com o tipo de lançamento.");
+        }
 
-    switch(tipo){
-        case RECEITA -> this.valor = valor;
-        case DESPESA -> this.valor = -valor;
-        default -> throw new IllegalArgumentException("favor selecionar entre receita ou despesa");
-    }
+        switch(tipo){
+            case RECEITA -> this.valor = valor;
+            case DESPESA -> this.valor = -valor;
+            default -> throw new IllegalArgumentException("favor selecionar entre receita ou despesa");
+        }
 
-    this.categoria = categoria;
-    this.data = data;
-    this.meioDeMovimentacao = meioDeMovimentacao;
-    this.tipo = tipo;
-    
-    this.id = id;
-    if(id > contador)
-        contador = id;
+        this.categoria = categoria;
+        this.data = data;
+        this.meioDeMovimentacao = meioDeMovimentacao;
+        this.tipo = tipo;
+        
+        this.id = id;
+        if(id > contador)
+            contador = id;
     }
     
     @Override
