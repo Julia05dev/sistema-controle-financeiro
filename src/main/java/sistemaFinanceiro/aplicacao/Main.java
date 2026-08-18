@@ -6,9 +6,8 @@ import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.modelo.enums.TipoCategoria;
 import sistemaFinanceiro.modelo.enums.TipoLancamento;
 import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
-import sistemaFinanceiro.servico.*;
 
-import java.io.IOException;
+import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -62,7 +61,7 @@ public class Main {
         return valor;
     }
 
-    public static void cadastrandoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws IOException{
+    public static void cadastrandoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws SQLException{
 
         System.out.println("Selecione o tipo:"); 
         System.out.println("1- " + TipoLancamento.RECEITA);
@@ -148,7 +147,7 @@ public class Main {
         sistemaFinanceiro.criaLancamento(categoria, data, meioDeMovimentacao, tipo, valor);
     }
 
-    public static void removendoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws IOException{
+    public static void removendoLancamento(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws SQLException{
         if(!sistemaFinanceiro.mostraLancamentos().isEmpty()){
             mostrandoLancamentos(sistemaFinanceiro, scanner);
             System.out.println("Informe o id do lancamento a ser removido:");
@@ -172,7 +171,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void mostrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws IOException{
+    public static void mostrandoLancamentos(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws SQLException{
         if(sistemaFinanceiro.mostraLancamentos().isEmpty()){
             System.out.println("Nenhum lancamento cadastrado!"); 
         }else{
@@ -345,8 +344,9 @@ public class Main {
                 }
             }while(controle != 0);
             scanner.close();
-        }catch(IOException e){
-            System.out.println("Erro ao acessar arquivo de lançamentos!");
+        }catch(SQLException e){
+            System.out.println("Erro ao acessar banco de dados!");
+            e.printStackTrace();
         }
     }
 }
