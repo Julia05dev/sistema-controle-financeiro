@@ -5,6 +5,7 @@ import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.modelo.enums.*;
 import sistemaFinanceiro.modelo.filtros.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import sistemaFinanceiro.persistencia.dao.LancamentoDAO;
 import sistemaFinanceiro.persistencia.conexaoJDBC.SingleConnection;
@@ -16,6 +17,11 @@ public class SistemaFinanceiro{
     public SistemaFinanceiro() throws SQLException{
         this.carteira = new Carteira();
         this.lancamentoDAO = new LancamentoDAO(SingleConnection.getConnection());
+        carteira.addListaLancamentos(lancamentoDAO.listarTodos());
+    }
+    public SistemaFinanceiro(Connection connection) throws SQLException{
+        this. carteira = new Carteira();
+        this.lancamentoDAO = new LancamentoDAO(connection);
         carteira.addListaLancamentos(lancamentoDAO.listarTodos());
     }
 

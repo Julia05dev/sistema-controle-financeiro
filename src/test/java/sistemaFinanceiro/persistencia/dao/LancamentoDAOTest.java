@@ -40,7 +40,6 @@ class LancamentoDAOTest {
 
         connection.setAutoCommit(false);
 
-        confirmarBancoDeTeste();
         limparTabela();
 
         dao = new LancamentoDAO(connection);
@@ -69,6 +68,8 @@ class LancamentoDAOTest {
     }
 
     private void limparTabela() throws SQLException {
+        confirmarBancoDeTeste();
+
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("DELETE FROM lancamento");
             connection.commit();
