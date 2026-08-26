@@ -7,6 +7,7 @@ import sistemaFinanceiro.modelo.enums.TipoCategoria;
 import sistemaFinanceiro.modelo.enums.TipoLancamento;
 import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
 
+import sistemaFinanceiro.persistencia.conexaoJDBC.SingleConnection;
 import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -347,6 +348,16 @@ public class Main {
         }catch(SQLException e){
             System.out.println("Erro ao acessar banco de dados!");
             e.printStackTrace();
+        }
+        finally {
+            try {
+                SingleConnection.fecharConexao();
+            } catch (SQLException e) {
+                System.out.println(
+                    "Erro ao fechar a conexao com o banco!"
+                );
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package sistemaFinanceiro.persistencia.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -16,23 +17,55 @@ import sistemaFinanceiro.modelo.Lancamento;
 import sistemaFinanceiro.modelo.enums.TipoCategoria;
 import sistemaFinanceiro.modelo.enums.TipoLancamento;
 import sistemaFinanceiro.modelo.enums.TipoMovimentacao;
-import sistemaFinanceiro.persistencia.conexaoJDBC.SingleConnection;
 
 class LancamentoDAOTest {
+
+    private static final String NOME_BANCO_TESTE =
+        "teste";
+
+    private static final String URL_TESTE =
+        "jdbc:postgresql://localhost:5432/" + NOME_BANCO_TESTE;
+
+    private static final String USUARIO = "postgres";
+    private static final String SENHA = System.getenv("DB_PASSWORD");
 
     private Connection connection;
     private LancamentoDAO dao;
 
     @BeforeEach
     void prepararTeste() throws SQLException {
-        connection = SingleConnection.getConnection();
-        dao = new LancamentoDAO(connection);
+        connection = DriverManager.getConnection(
+            URL_TESTE, USUARIO, SENHA
+        );
+
+        connection.setAutoCommit(false);
+
+        confirmarBancoDeTeste();
         limparTabela();
+
+        dao = new LancamentoDAO(connection);
     }
 
     @AfterEach
     void finalizarTeste() throws SQLException {
-        limparTabela();
+        if (connection != null) {
+            try {
+                if (!connection.isClosed())
+                    limparTabela();
+            } finally {
+                connection.close();
+            }
+        }
+    }
+
+    private void confirmarBancoDeTeste() throws SQLException {
+        String bancoAtual = connection.getCatalog();
+
+        if (!NOME_BANCO_TESTE.equals(bancoAtual)) {
+            throw new IllegalStateException(
+                "Os testes so podem usar o banco " + NOME_BANCO_TESTE
+            );
+        }
     }
 
     private void limparTabela() throws SQLException {
@@ -108,6 +141,7 @@ class LancamentoDAOTest {
                                despesaRecuperada.getmeioDeMovimentacao())
         );
     }
+
     @Test
     void deveExcluirLancamentoExistente() throws SQLException {
         Lancamento lancamento = new Lancamento(
