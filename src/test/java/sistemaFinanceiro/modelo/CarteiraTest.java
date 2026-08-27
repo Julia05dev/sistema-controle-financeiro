@@ -200,4 +200,25 @@ class CarteiraTest {
         assertEquals(1, resultado.size());
         assertSame(receita, resultado.get(0));
     }
+    @Test
+        void deveAlterarLancamentoExistente() {
+        Carteira carteira = new Carteira();
+
+        Lancamento original = criarReceita(1, new BigDecimal("1000.00") );
+
+        Lancamento alterado = new Lancamento(1, TipoCategoria.MERCADO, LocalDate.of(2026, 8, 27), TipoMovimentacao.DEBITO, TipoLancamento.DESPESA, new BigDecimal("250.00") );
+
+        carteira.addLancamento(original);
+
+        boolean resultado = carteira.alteraLancamento(alterado);
+
+        assertAll(
+                () -> assertTrue(resultado),
+
+                () -> assertEquals(1,carteira.mostraLancamentos().size()),
+                () -> assertSame(alterado, carteira.buscaPorId(1)),
+
+                () -> assertSame(alterado, carteira.mostraLancamentos().get(0))
+        );
+        }
 }

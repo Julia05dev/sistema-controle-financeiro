@@ -31,6 +31,23 @@ public class Carteira {
         lancamentos.remove(removido);
         return true;
     }
+    public boolean alteraLancamento(
+        Lancamento lancamentoAlterado) {
+
+        if (lancamentoAlterado == null)
+            throw new IllegalArgumentException("o lançamento não pode ser nulo!");
+
+        Lancamento lancamentoAnterior =
+            lancamentoId.get(lancamentoAlterado.getId());
+
+        if (lancamentoAnterior == null)
+            return false;
+
+        int indice = lancamentos.indexOf(lancamentoAnterior);
+        lancamentos.set(indice, lancamentoAlterado);
+        lancamentoId.put(lancamentoAlterado.getId(), lancamentoAlterado);
+        return true;
+}
 
     public Lancamento buscaPorId(int id){
         if(id <= 0)

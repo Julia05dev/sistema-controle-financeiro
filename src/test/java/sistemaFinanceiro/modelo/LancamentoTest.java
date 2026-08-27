@@ -167,4 +167,5 @@ public class LancamentoTest {
                         null,
                         new BigDecimal("100.00")));
     }
+    
 }

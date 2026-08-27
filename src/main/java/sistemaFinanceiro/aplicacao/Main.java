@@ -167,6 +167,73 @@ public class Main {
             System.out.println("nenhum lancamento cadastrado!");
         }
     }
+    public static void alterandoLancamento(
+        SistemaFinanceiro sistemaFinanceiro,
+        Scanner scanner) throws SQLException {
+
+        if (sistemaFinanceiro.mostraLancamentos().isEmpty()) {
+            System.out.println("nenhum lancamento cadastrado!");
+            return;
+        }
+
+        mostrandoLancamentos(sistemaFinanceiro, scanner);
+        System.out.println("Informe o id do lancamento a ser alterado:");
+
+        int id = lerIntervalo(Integer.MAX_VALUE, 1, scanner);
+        boolean idEncontrado = false;
+
+        for (Lancamento lancamento : sistemaFinanceiro.mostraLancamentos()) {
+            if (lancamento.getId() == id) {
+                idEncontrado = true;
+                break;
+            }
+        }
+
+        if (!idEncontrado) {
+            scanner.nextLine();
+            System.out.println("ID não encontrado");
+            System.out.println();
+            return;
+        }
+
+        System.out.println("Selecione o novo tipo:");
+        System.out.println("1- " + TipoLancamento.RECEITA);
+        System.out.println("2- " + TipoLancamento.DESPESA);
+
+        TipoLancamento tipo = TipoLancamento.fromInt(lerIntervalo(2, 1, scanner));
+        TipoCategoria categoria = escolherCategoria(scanner, tipo);
+        TipoMovimentacao meioDeMovimentacao = escolherMovimentacao(scanner, tipo);
+
+        System.out.println(
+            "Informe o novo valor "
+            + "(apenas o número sem nenhum símbolo):"
+        );
+
+        BigDecimal valor = lerDouble(scanner);
+
+        while (valor.compareTo(BigDecimal.ZERO) <= 0) {
+            System.out.println("favor digitar um valor maior que zero!");
+            valor = lerDouble(scanner);
+        }
+
+        scanner.nextLine();
+        System.out.println(
+            "Informe a nova data "
+            + "(formato dd/MM/yyyy):"
+        );
+
+        LocalDate data = lerData(scanner);
+
+        boolean alterou = sistemaFinanceiro.alteraLancamento(id, categoria, data, meioDeMovimentacao, tipo, valor);
+
+        if (alterou) {
+            System.out.println("Lancamento alterado com sucesso!");
+        } else {
+            System.out.println("ID não encontrado");
+        }
+
+        System.out.println();
+    }
 
     public static void calculandoSaldo(SistemaFinanceiro sistemaFinanceiro){
         BigDecimal saldo = sistemaFinanceiro.calculaSaldo();
@@ -381,10 +448,11 @@ public class Main {
                     + "4- mostrar lancamentos\n"
                     + "5- filtrar lancamentos\n"
                     + "6- mostrar relatorio mensal\n"
+                    + "7- alterar um lancamento\n"
                     + "0- SAIR");
                 System.out.println("-------------------------------------------------------------");
 
-                controle = lerIntervalo(6, 0, scanner);
+                controle = lerIntervalo(7, 0, scanner);
                 switch(controle){
                     case 1 -> {
                         cadastrandoLancamento(sistemaFinanceiro, scanner);
@@ -401,13 +469,12 @@ public class Main {
                     case 5 -> {
                         filtrandoLancamentos(sistemaFinanceiro, scanner);
                     }case 6 -> {
-                        mostrandoRelatorioMensal(
-                            sistemaFinanceiro,
-                            scanner
-                        );
+                        mostrandoRelatorioMensal(sistemaFinanceiro, scanner);
+                    }case 7 -> {
+                        alterandoLancamento(sistemaFinanceiro, scanner);
                     }
                 }
-                
+
             }while(controle != 0);
             scanner.close();
         }catch(SQLException e){

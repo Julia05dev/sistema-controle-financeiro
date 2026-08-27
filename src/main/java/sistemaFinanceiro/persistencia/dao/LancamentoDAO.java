@@ -49,6 +49,32 @@ public class LancamentoDAO {
             throw e;
         }
     }
+
+    private static final String SQL_ATUALIZAR =
+    "UPDATE lancamento " +
+    "SET data_lancamento = ?, valor = ?, tipo = ?, " +
+    "categoria = ?, meio_de_movimentacao = ? " +
+    "WHERE id = ?";
+
+    public boolean atualizar(Lancamento lancamento) throws SQLException {
+        if (lancamento == null) throw new IllegalArgumentException("O lancamento nao pode ser nulo.");
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_ATUALIZAR)) {
+            statement.setObject(1, lancamento.getData());
+            statement.setBigDecimal(2, lancamento.getValor());
+            statement.setString(3, lancamento.getTipo().name());
+            statement.setString(4, lancamento.getCategoria().name());
+            statement.setString(5, lancamento .getmeioDeMovimentacao() .name());
+            statement.setInt(6, lancamento.getId());
+
+            int linhasAfetadas = statement.executeUpdate();
+            connection.commit();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+    }
     
     private static final String SQL_LISTAR_TODOS = 
         "SELECT id, data_lancamento, valor, tipo, categoria, meio_de_movimentacao " +

@@ -48,6 +48,18 @@ public class SistemaFinanceiro{
         Lancamento lancamentoPersistido =  new Lancamento(idGerado, categoria, data, meioDeMovimentacao, tipo, valor);  //coloca na carteira
         carteira.addLancamento(lancamentoPersistido);   //só o lancamento com id vai pra carteira (nao fica duplicado)
     }
+    public boolean alteraLancamento(int id, TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, BigDecimal valor) throws SQLException {
+
+        Lancamento lancamentoAlterado =
+            new Lancamento(id, categoria, data, meioDeMovimentacao, tipo, valor);
+
+        boolean alterouNoBanco = lancamentoDAO.atualizar(lancamentoAlterado);
+        if (alterouNoBanco) { 
+            carteira.alteraLancamento(lancamentoAlterado);
+        }
+
+        return alterouNoBanco;
+}
 
     public RelatorioMensal gerarRelatorioMensal(int mes, int ano) throws SQLException {
         if (mes < 1 || mes > 12) 
