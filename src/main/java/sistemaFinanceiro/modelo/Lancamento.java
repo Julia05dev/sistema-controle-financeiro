@@ -7,9 +7,8 @@ import sistemaFinanceiro.modelo.enums.*;
 
 public class Lancamento {
     private final LocalDate data;
-    private static int contador = 0;
-    private final int id;
     private final BigDecimal valor;
+    private final int id;
     private final TipoLancamento tipo; //receita ou despesa
     private final TipoCategoria categoria;
     private final TipoMovimentacao meioDeMovimentacao;
@@ -31,12 +30,10 @@ public class Lancamento {
         this.data = data;
         this.meioDeMovimentacao = meioDeMovimentacao;
         this.tipo = tipo;
-
-        contador++;
-        this.id = contador;
+        this.id = 0;
     }
     public Lancamento(int id, TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, BigDecimal valor) {
-        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor.compareTo(BigDecimal.ZERO) <= 0)
+        if(id <= 0 || categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException();
 
         if (!categoria.aceitaTipo(tipo)) {
@@ -52,10 +49,7 @@ public class Lancamento {
         this.data = data;
         this.meioDeMovimentacao = meioDeMovimentacao;
         this.tipo = tipo;
-        
         this.id = id;
-        if(id > contador)
-            contador = id;
     }
     
     @Override
