@@ -135,24 +135,6 @@ Os testes automatizados abrangem:
 - inserção, consulta e exclusão no DAO
 - sincronização entre o serviço, a carteira e o banco de dados
 
-Para executar os testes de integração, crie também um banco PostgreSQL chamado:
-
-```text
-teste
-```
-
-Aplique nesse banco o mesmo arquivo:
-
-```text
-database/schema.sql
-```
-
-Mantenha a variável `DB_PASSWORD` configurada e execute:
-
-```bash
-mvn clean test
-```
-
 Os testes de persistência verificam o nome do banco antes de limpar a tabela, evitando que os dados do banco principal sejam removidos durante a execução.
 
 ## Próximas evoluções
