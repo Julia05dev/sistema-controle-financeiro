@@ -123,78 +123,6 @@ O período é delimitado pelo primeiro dia do mês selecionado e pelo primeiro d
 
 O resultado é organizado pela classe `RelatorioMensal` e apresentado ao usuário pela interface de linha de comando.
 
-## Como executar
-
-### Pré-requisitos
-
-- Java 15 ou superior
-- Maven
-- PostgreSQL
-- Uma IDE com suporte a projetos Maven, como VS Code ou IntelliJ IDEA
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/Julia05dev/sistema-controle-financeiro.git
-cd sistema-controle-financeiro
-```
-
-### 2. Crie o banco principal
-
-No PostgreSQL, crie um banco chamado:
-
-```text
-sistema_financeiro
-```
-
-Depois, execute nesse banco o conteúdo do arquivo:
-
-```text
-database/schema.sql
-```
-
-Por padrão, a aplicação utiliza a seguinte conexão:
-
-```text
-jdbc:postgresql://localhost:5432/sistema_financeiro
-```
-
-E o seguinte usuário:
-
-```text
-postgres
-```
-
-Caso seu ambiente utilize outros dados, ajuste a URL ou o usuário em `SingleConnection.java`.
-
-### 3. Configure a senha do PostgreSQL
-
-A senha não fica armazenada no código. Ela deve ser informada pela variável de ambiente `DB_PASSWORD`.
-
-No PowerShell:
-
-```powershell
-$env:DB_PASSWORD="sua_senha"
-```
-
-No Linux ou macOS:
-
-```bash
-export DB_PASSWORD="sua_senha"
-```
-
-### 4. Compile o projeto
-
-```bash
-mvn clean compile
-```
-
-Depois, execute pela IDE a classe:
-
-```text
-src/main/java/sistemaFinanceiro/aplicacao/Main.java
-```
-
 ## Testes
 
 Os testes automatizados abrangem:
@@ -206,24 +134,6 @@ Os testes automatizados abrangem:
 - conexão JDBC
 - inserção, consulta e exclusão no DAO
 - sincronização entre o serviço, a carteira e o banco de dados
-
-Para executar os testes de integração, crie também um banco PostgreSQL chamado:
-
-```text
-teste
-```
-
-Aplique nesse banco o mesmo arquivo:
-
-```text
-database/schema.sql
-```
-
-Mantenha a variável `DB_PASSWORD` configurada e execute:
-
-```bash
-mvn clean test
-```
 
 Os testes de persistência verificam o nome do banco antes de limpar a tabela, evitando que os dados do banco principal sejam removidos durante a execução.
 
