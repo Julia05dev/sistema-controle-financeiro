@@ -1,6 +1,7 @@
 package sistemaFinanceiro.servico;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.modelo.enums.*;
 import sistemaFinanceiro.modelo.filtros.*;
@@ -47,6 +48,32 @@ public class SistemaFinanceiro{
         Lancamento lancamentoPersistido =  new Lancamento(idGerado, categoria, data, meioDeMovimentacao, tipo, valor);  //coloca na carteira
         carteira.addLancamento(lancamentoPersistido);   //só o lancamento com id vai pra carteira (nao fica duplicado)
     }
+
+    public RelatorioMensal gerarRelatorioMensal(int mes, int ano) throws SQLException {
+        if (mes < 1 || mes > 12) 
+            throw new IllegalArgumentException("O mes deve estar entre 1 e 12.");
+
+        if (ano < 1) 
+            throw new IllegalArgumentException("O ano deve ser maior que zero.");
+
+        LocalDate inicio = LocalDate.of(ano, mes, 1);
+        LocalDate fim = inicio.plusMonths(1);
+
+        Map<TipoLancamento, BigDecimal>
+            totaisPorTipo = lancamentoDAO.totalPorTipoNoPeriodo(inicio, fim);
+
+        Map<TipoCategoria, BigDecimal> receitasPorCategoria = lancamentoDAO.totalPorCategoriaNoPeriodo(inicio, fim, TipoLancamento.RECEITA);
+
+        Map<TipoCategoria, BigDecimal> despesasPorCategoria = lancamentoDAO.totalPorCategoriaNoPeriodo(inicio, fim, TipoLancamento.DESPESA);
+
+        List<Lancamento> lancamentos = lancamentoDAO.listarPorPeriodo(inicio, fim);
+
+        BigDecimal totalReceitas = totaisPorTipo.get(TipoLancamento.RECEITA);
+
+        BigDecimal totalDespesas = totaisPorTipo.get(TipoLancamento.DESPESA);
+
+        return new RelatorioMensal(mes, ano, totalReceitas, totalDespesas, receitasPorCategoria, despesasPorCategoria, lancamentos);
+}
 
     //------------FILTROS------------
 

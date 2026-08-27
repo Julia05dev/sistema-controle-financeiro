@@ -184,6 +184,56 @@ public class Main {
             }
         }
     }
+    public static void mostrandoRelatorioMensal(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws SQLException {
+        System.out.println("Informe o mes do relatorio:");
+        int mes = lerIntervalo(12, 1, scanner);
+        System.out.println("Informe o ano do relatorio:");
+        int ano = lerIntervalo(Integer.MAX_VALUE, 1, scanner);
+
+        RelatorioMensal relatorio = sistemaFinanceiro.gerarRelatorioMensal(mes, ano);
+
+        System.out.println();
+        System.out.println("-------------------------------------------------------------");
+        System.out.printf("RELATORIO MENSAL - %02d/%d%n", relatorio.getMes(), relatorio.getAno());
+        System.out.println("-------------------------------------------------------------");
+        System.out.printf("Total de receitas: R$%.2f%n", relatorio.getTotalReceitas());
+        System.out.printf("Total de despesas: R$%.2f%n", relatorio.getTotalDespesas());
+        System.out.printf("Saldo do periodo: R$%.2f%n", relatorio.getSaldo());
+        System.out.println();
+        System.out.println("RECEITAS POR CATEGORIA:");
+
+        if (relatorio.getReceitasPorCategoria().isEmpty()) {
+            System.out.println("Nenhuma receita no periodo.");
+        } else {
+            for (Map.Entry<TipoCategoria, BigDecimal> resultado : relatorio.getReceitasPorCategoria().entrySet()) {
+                System.out.printf("%s: R$%.2f%n", resultado.getKey(), resultado.getValue());
+            }
+        }
+
+        System.out.println();
+        System.out.println("DESPESAS POR CATEGORIA:");
+
+        if (relatorio.getDespesasPorCategoria().isEmpty()) {
+            System.out.println("Nenhuma despesa no periodo.");
+        } else {
+            for (Map.Entry<TipoCategoria, BigDecimal> resultado : relatorio.getDespesasPorCategoria().entrySet()) {
+                System.out.printf("%s: R$%.2f%n", resultado.getKey(), resultado.getValue()
+                );
+            }
+        }
+
+        System.out.println();
+        System.out.println("LANCAMENTOS DO PERIODO:");
+
+        if (relatorio.getLancamentos().isEmpty()) {
+            System.out.println("Nenhum lancamento no periodo.");
+        } else {
+            for (Lancamento lancamento : relatorio.getLancamentos()) {
+                System.out.println(lancamento);
+            }
+        }
+        System.out.println("-------------------------------------------------------------");
+    }
 
     //metodo auxiliar pra definir categoria (a depender do tipo)
     public static TipoCategoria escolherCategoria(Scanner scanner, TipoLancamento tipo){
@@ -324,10 +374,17 @@ public class Main {
             do{
                 System.out.println("-------------------------------------------------------------");
                 System.out.println
-                ("ESCOLHA UMA OPÇÃO:\n1- fazer um lancamento\n2- remover um lancamento\n3- calcular saldo\n4- mostrar lancamentos\n5- filtrar lancamentos\n0- SAIR");
+                ("ESCOLHA UMA OPÇÃO:\n"
+                    + "1- fazer um lancamento\n"
+                    + "2- remover um lancamento\n"
+                    + "3- calcular saldo\n"
+                    + "4- mostrar lancamentos\n"
+                    + "5- filtrar lancamentos\n"
+                    + "6- mostrar relatorio mensal\n"
+                    + "0- SAIR");
                 System.out.println("-------------------------------------------------------------");
 
-                controle = lerIntervalo(5, 0, scanner);
+                controle = lerIntervalo(6, 0, scanner);
                 switch(controle){
                     case 1 -> {
                         cadastrandoLancamento(sistemaFinanceiro, scanner);
@@ -343,8 +400,14 @@ public class Main {
                     }
                     case 5 -> {
                         filtrandoLancamentos(sistemaFinanceiro, scanner);
+                    }case 6 -> {
+                        mostrandoRelatorioMensal(
+                            sistemaFinanceiro,
+                            scanner
+                        );
                     }
                 }
+                
             }while(controle != 0);
             scanner.close();
         }catch(SQLException e){

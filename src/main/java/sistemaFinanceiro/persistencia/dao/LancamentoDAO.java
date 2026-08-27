@@ -80,6 +80,122 @@ public class LancamentoDAO {
         }
     }
 
+    private static final String SQL_TOTAL_POR_TIPO_NO_PERIODO =
+    "SELECT tipo, SUM(valor) AS total " +
+    "FROM lancamento " +
+    "WHERE data_lancamento >= ? " +
+    "AND data_lancamento < ? " +
+    "GROUP BY tipo";
+
+    public Map<TipoLancamento, BigDecimal> totalPorTipoNoPeriodo(LocalDate inicio, LocalDate fim) throws SQLException {
+        validarPeriodo(inicio, fim);
+        Map<TipoLancamento, BigDecimal> totais = new EnumMap<>(TipoLancamento.class);
+
+        totais.put(TipoLancamento.RECEITA, BigDecimal.ZERO);
+
+        totais.put(TipoLancamento.DESPESA, BigDecimal.ZERO);
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_TOTAL_POR_TIPO_NO_PERIODO)){
+            statement.setObject(1, inicio);
+            statement.setObject(2, fim);
+            try (ResultSet resultado = statement.executeQuery()) {
+                while (resultado.next()) {
+                    TipoLancamento tipo = TipoLancamento.valueOf(resultado.getString("tipo"));
+                    BigDecimal total = resultado.getBigDecimal("total");
+                    totais.put(tipo, total);
+                }
+            }
+            connection.commit();
+            return totais;
+        }catch (SQLException e){
+            connection.rollback();
+            throw e;
+        }
+    }
+
+
+    private static final String SQL_TOTAL_POR_CATEGORIA_NO_PERIODO =
+        "SELECT categoria, SUM(valor) AS total " +
+        "FROM lancamento " +
+        "WHERE data_lancamento >= ? " +
+        "AND data_lancamento < ? " +
+        "AND tipo = ? " +
+        "GROUP BY categoria " +
+        "ORDER BY total DESC";
+
+    public Map<TipoCategoria, BigDecimal>totalPorCategoriaNoPeriodo(LocalDate inicio, LocalDate fim, TipoLancamento tipo) throws SQLException {
+        validarPeriodo(inicio, fim);
+
+        if (tipo == null) {
+            throw new IllegalArgumentException(
+                "O tipo nao pode ser nulo."
+            );
+        }
+
+        Map<TipoCategoria, BigDecimal> totais = new LinkedHashMap<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_TOTAL_POR_CATEGORIA_NO_PERIODO)) {
+            statement.setObject(1, inicio);
+            statement.setObject(2, fim);
+            statement.setString(3, tipo.name());
+
+            try (ResultSet resultado = statement.executeQuery()) {
+                while (resultado.next()) {
+                    TipoCategoria categoria = TipoCategoria.valueOf(resultado.getString("categoria"));
+                    BigDecimal total = resultado.getBigDecimal("total");
+                    totais.put(categoria, total);
+                }
+            }
+            connection.commit();
+            return totais;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+    }
+
+    private static final String SQL_LISTAR_POR_PERIODO =
+        "SELECT id, data_lancamento, valor, " +
+        "tipo, categoria, meio_de_movimentacao " +
+        "FROM lancamento " +
+        "WHERE data_lancamento >= ? " +
+        "AND data_lancamento < ? " +
+        "ORDER BY data_lancamento, id";
+
+    public List<Lancamento> listarPorPeriodo(LocalDate inicio, LocalDate fim) throws SQLException {
+        validarPeriodo(inicio, fim);
+        List<Lancamento> lancamentos = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_LISTAR_POR_PERIODO)) {
+            statement.setObject(1, inicio);
+            statement.setObject(2, fim);
+            try (ResultSet resultado = statement.executeQuery()) {
+                while (resultado.next()) {
+                    int id = resultado.getInt("id");
+                    LocalDate data = resultado.getObject("data_lancamento", LocalDate.class);
+                    BigDecimal valor = resultado.getBigDecimal("valor");
+                    TipoLancamento tipo = TipoLancamento.valueOf(resultado.getString("tipo"));
+                    TipoCategoria categoria = TipoCategoria.valueOf(resultado.getString("categoria"));
+                    TipoMovimentacao movimentacao = TipoMovimentacao.valueOf(resultado.getString("meio_de_movimentacao"));
+                    Lancamento lancamento = new Lancamento(id, categoria, data, movimentacao, tipo, valor);
+                    lancamentos.add(lancamento);
+                }
+            }
+            connection.commit();
+            return lancamentos;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+    }
+
+    private void validarPeriodo(LocalDate inicio, LocalDate fim) {
+
+        if (inicio == null || fim == null || !inicio.isBefore(fim)) {
+            throw new IllegalArgumentException("Periodo invalido.");
+        }
+    }
+
     private static final String SQL_EXCLUIR_POR_ID = 
         "DELETE FROM lancamento " +
         "WHERE id = ?";
