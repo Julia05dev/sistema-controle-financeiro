@@ -2,6 +2,7 @@ package sistemaFinanceiro.servico;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,13 +22,18 @@ import sistemaFinanceiro.persistencia.dao.LancamentoDAO;
 
 class SistemaFinanceiroTest {
 
-    private static final String NOME_BANCO_TESTE = "teste";
+    private static final String NOME_BANCO_TESTE =
+        "teste";
 
     private static final String URL_TESTE =
-        "jdbc:postgresql://localhost:5432/" + NOME_BANCO_TESTE;
+        "jdbc:postgresql://localhost:5432/"
+            + NOME_BANCO_TESTE;
 
-    private static final String USUARIO = "postgres";
-    private static final String SENHA = System.getenv("DB_PASSWORD");
+    private static final String USUARIO =
+        "postgres";
+
+    private static final String SENHA =
+        System.getenv("DB_PASSWORD");
 
     private Connection connection;
     private LancamentoDAO dao;
@@ -36,7 +42,9 @@ class SistemaFinanceiroTest {
     @BeforeEach
     void prepararTeste() throws SQLException {
         connection = DriverManager.getConnection(
-            URL_TESTE, USUARIO, SENHA
+            URL_TESTE,
+            USUARIO,
+            SENHA
         );
 
         connection.setAutoCommit(false);
@@ -51,20 +59,24 @@ class SistemaFinanceiroTest {
     void finalizarTeste() throws SQLException {
         if (connection != null) {
             try {
-                if (!connection.isClosed())
+                if (!connection.isClosed()) {
                     limparTabela();
+                }
             } finally {
                 connection.close();
             }
         }
     }
 
-    private void confirmarBancoDeTeste() throws SQLException {
+    private void confirmarBancoDeTeste()
+            throws SQLException {
+
         String bancoAtual = connection.getCatalog();
 
         if (!NOME_BANCO_TESTE.equals(bancoAtual)) {
             throw new IllegalStateException(
-                "Os testes so podem usar o banco " + NOME_BANCO_TESTE
+                "Os testes so podem usar o banco "
+                    + NOME_BANCO_TESTE
             );
         }
     }
@@ -72,8 +84,13 @@ class SistemaFinanceiroTest {
     private void limparTabela() throws SQLException {
         confirmarBancoDeTeste();
 
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DELETE FROM lancamento");
+        try (Statement statement =
+                connection.createStatement()) {
+
+            statement.executeUpdate(
+                "DELETE FROM lancamento"
+            );
+
             connection.commit();
         }
     }
@@ -87,7 +104,7 @@ class SistemaFinanceiroTest {
             LocalDate.of(2026, 8, 18),
             TipoMovimentacao.PIX,
             TipoLancamento.RECEITA,
-            2500.00
+            new BigDecimal("2500.00")
         );
 
         int idGerado = dao.inserir(lancamento);
@@ -99,8 +116,17 @@ class SistemaFinanceiroTest {
             novoSistema.mostraLancamentos();
 
         assertEquals(1, resultado.size());
-        assertEquals(idGerado, resultado.get(0).getId());
-        assertEquals(2500.00, resultado.get(0).getValor(), 0.001);
+
+        assertEquals(
+            idGerado,
+            resultado.get(0).getId()
+        );
+
+        assertEquals(
+            0,
+            new BigDecimal("2500.00")
+                .compareTo(resultado.get(0).getValor())
+        );
     }
 
     @Test
@@ -112,7 +138,7 @@ class SistemaFinanceiroTest {
             LocalDate.of(2026, 8, 18),
             TipoMovimentacao.DEBITO,
             TipoLancamento.DESPESA,
-            150.00
+            new BigDecimal("150.00")
         );
 
         List<Lancamento> naCarteira =
@@ -122,8 +148,15 @@ class SistemaFinanceiroTest {
             dao.listarTodos();
 
         assertAll(
-            () -> assertEquals(1, naCarteira.size()),
-            () -> assertEquals(1, noBanco.size()),
+            () -> assertEquals(
+                1,
+                naCarteira.size()
+            ),
+
+            () -> assertEquals(
+                1,
+                noBanco.size()
+            ),
 
             () -> assertEquals(
                 noBanco.get(0).getId(),
@@ -131,15 +164,19 @@ class SistemaFinanceiroTest {
             ),
 
             () -> assertEquals(
-                -150.00,
-                naCarteira.get(0).getValor(),
-                0.001
+                0,
+                new BigDecimal("150.00")
+                    .compareTo(
+                        naCarteira.get(0).getValor()
+                    )
             ),
 
             () -> assertEquals(
-                -150.00,
-                noBanco.get(0).getValor(),
-                0.001
+                0,
+                new BigDecimal("150.00")
+                    .compareTo(
+                        noBanco.get(0).getValor()
+                    )
             )
         );
     }
@@ -153,7 +190,7 @@ class SistemaFinanceiroTest {
             LocalDate.of(2026, 8, 18),
             TipoMovimentacao.PIX,
             TipoLancamento.RECEITA,
-            500.00
+            new BigDecimal("500.00")
         );
 
         int id = sistema
@@ -161,13 +198,16 @@ class SistemaFinanceiroTest {
             .get(0)
             .getId();
 
-        boolean removeu = sistema.removeLancamento(id);
+        boolean removeu =
+            sistema.removeLancamento(id);
 
         assertAll(
             () -> assertTrue(removeu),
+
             () -> assertTrue(
                 sistema.mostraLancamentos().isEmpty()
             ),
+
             () -> assertTrue(
                 dao.listarTodos().isEmpty()
             )
@@ -183,13 +223,16 @@ class SistemaFinanceiroTest {
             LocalDate.of(2026, 8, 18),
             TipoMovimentacao.DINHEIRO,
             TipoLancamento.RECEITA,
-            100.00
+            new BigDecimal("100.00")
         );
 
         boolean removeu =
-            sistema.removeLancamento(Integer.MAX_VALUE);
+            sistema.removeLancamento(
+                Integer.MAX_VALUE
+            );
 
         assertFalse(removeu);
+
         assertEquals(
             1,
             sistema.mostraLancamentos().size()

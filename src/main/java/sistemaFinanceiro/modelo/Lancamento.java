@@ -1,4 +1,5 @@
 package sistemaFinanceiro.modelo;
+import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
@@ -8,13 +9,13 @@ public class Lancamento {
     private final LocalDate data;
     private static int contador = 0;
     private final int id;
-    private final double valor;
+    private final BigDecimal valor;
     private final TipoLancamento tipo; //receita ou despesa
     private final TipoCategoria categoria;
     private final TipoMovimentacao meioDeMovimentacao;
 
-    public Lancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor) {
-        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor <= 0.0)
+    public Lancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, BigDecimal valor) {
+        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException();
 
         if (!categoria.aceitaTipo(tipo)) {
@@ -24,13 +25,8 @@ public class Lancamento {
         if (!meioDeMovimentacao.aceitaTipo(tipo)) {
             throw new IllegalArgumentException("meio de movimentação incompatível com o tipo de lançamento.");
         }
-
-        switch(tipo){
-            case RECEITA -> this.valor = valor;
-            case DESPESA -> this.valor = -valor;
-            default -> throw new IllegalArgumentException("favor selecionar entre receita ou despesa");
-        }
-
+        
+        this.valor = valor;
         this.categoria = categoria;
         this.data = data;
         this.meioDeMovimentacao = meioDeMovimentacao;
@@ -39,8 +35,8 @@ public class Lancamento {
         contador++;
         this.id = contador;
     }
-    public Lancamento(int id, TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor) {
-        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor <= 0.0)
+    public Lancamento(int id, TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, BigDecimal valor) {
+        if(categoria == null || data == null || meioDeMovimentacao == null || tipo == null || valor.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException();
 
         if (!categoria.aceitaTipo(tipo)) {
@@ -51,12 +47,7 @@ public class Lancamento {
             throw new IllegalArgumentException("meio de movimentação incompatível com o tipo de lançamento.");
         }
 
-        switch(tipo){
-            case RECEITA -> this.valor = valor;
-            case DESPESA -> this.valor = -valor;
-            default -> throw new IllegalArgumentException("favor selecionar entre receita ou despesa");
-        }
-
+        this.valor = valor;
         this.categoria = categoria;
         this.data = data;
         this.meioDeMovimentacao = meioDeMovimentacao;
@@ -89,7 +80,7 @@ public class Lancamento {
         return id;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 

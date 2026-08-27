@@ -1,5 +1,6 @@
 package sistemaFinanceiro.modelo;
 
+import java.math.BigDecimal;
 import java.util.*;
 import sistemaFinanceiro.modelo.filtros.*;
 
@@ -39,10 +40,15 @@ public class Carteira {
         return lancamentoId.get(id);
     }
 
-    public double calculaSaldo(){
-        double saldo = 0.0;
+    public BigDecimal calculaSaldo(){
+        BigDecimal saldo = BigDecimal.ZERO;
         for (Lancamento l : lancamentos) {
-            saldo += l.getValor(); 
+            switch (l.getTipo()) {
+                case RECEITA ->
+                    saldo = saldo.add(l.getValor());
+                case DESPESA ->
+                    saldo = saldo.subtract(l.getValor());
+            }    
     }
         return saldo;
     }

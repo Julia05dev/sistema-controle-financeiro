@@ -30,7 +30,7 @@ public class LancamentoDAO {
 
         try(PreparedStatement statement = connection.prepareStatement(SQL_INSERIR)){
             statement.setObject(1, lancamento.getData());
-            statement.setBigDecimal(2, BigDecimal.valueOf(Math.abs(lancamento.getValor())));
+            statement.setBigDecimal(2, lancamento.getValor());
             statement.setString(3, lancamento.getTipo().name());
             statement.setString(4, lancamento.getCategoria().name());
             statement.setString(5, lancamento.getmeioDeMovimentacao().name());
@@ -63,7 +63,7 @@ public class LancamentoDAO {
                 while(resultado.next()){
                     int id = resultado.getInt("id");
                     LocalDate data = resultado.getObject("data_lancamento", LocalDate.class);
-                    double valor = resultado.getBigDecimal("valor").doubleValue();
+                    BigDecimal valor = resultado.getBigDecimal("valor");
                     TipoLancamento tipo = TipoLancamento.valueOf(resultado.getString("tipo"));
                     TipoCategoria categoria = TipoCategoria.valueOf(resultado.getString("categoria"));
                     TipoMovimentacao movimentacao = TipoMovimentacao.valueOf(resultado.getString("meio_de_movimentacao"));

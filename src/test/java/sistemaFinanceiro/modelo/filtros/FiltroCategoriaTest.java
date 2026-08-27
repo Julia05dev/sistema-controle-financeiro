@@ -2,6 +2,7 @@ package sistemaFinanceiro.modelo.filtros;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class FiltroCategoriaTest {
                 LocalDate.of(2026, 8, 14),
                 TipoMovimentacao.DEBITO,
                 TipoLancamento.DESPESA,
-                100.0);
+                new BigDecimal("100.00"));
 
         FiltroPorCategoria filtro =
                 new FiltroPorCategoria(
@@ -36,7 +37,7 @@ class FiltroCategoriaTest {
                 LocalDate.of(2026, 8, 14),
                 TipoMovimentacao.DEBITO,
                 TipoLancamento.DESPESA,
-                100.0);
+                new BigDecimal("100.00"));
 
         FiltroPorCategoria filtro =
                 new FiltroPorCategoria(

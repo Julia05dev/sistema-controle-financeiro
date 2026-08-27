@@ -5,6 +5,7 @@ import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.modelo.enums.*;
 import sistemaFinanceiro.modelo.filtros.*;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import sistemaFinanceiro.persistencia.dao.LancamentoDAO;
@@ -36,11 +37,11 @@ public class SistemaFinanceiro{
         return removeNoBanco;
     }
 
-    public double calculaSaldo(){
+    public BigDecimal calculaSaldo(){
         return carteira.calculaSaldo();
     }
 
-    public void criaLancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, double valor) throws SQLException{
+    public void criaLancamento(TipoCategoria categoria, LocalDate data, TipoMovimentacao meioDeMovimentacao, TipoLancamento tipo, BigDecimal valor) throws SQLException{
         Lancamento novoLancamento = new Lancamento(categoria, data, meioDeMovimentacao, tipo, valor);   //joga os dados pro banco
         int idGerado = lancamentoDAO.inserir(novoLancamento);   //insert no banco e gera (recebe) o id do lancamento
         Lancamento lancamentoPersistido =  new Lancamento(idGerado, categoria, data, meioDeMovimentacao, tipo, valor);  //coloca na carteira

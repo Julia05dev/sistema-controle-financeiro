@@ -2,6 +2,7 @@ package sistemaFinanceiro.persistencia.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,7 +28,8 @@ class LancamentoDAOTest {
         "jdbc:postgresql://localhost:5432/" + NOME_BANCO_TESTE;
 
     private static final String USUARIO = "postgres";
-    private static final String SENHA = System.getenv("DB_PASSWORD");
+    private static final String SENHA =
+        System.getenv("DB_PASSWORD");
 
     private Connection connection;
     private LancamentoDAO dao;
@@ -35,7 +37,9 @@ class LancamentoDAOTest {
     @BeforeEach
     void prepararTeste() throws SQLException {
         connection = DriverManager.getConnection(
-            URL_TESTE, USUARIO, SENHA
+            URL_TESTE,
+            USUARIO,
+            SENHA
         );
 
         connection.setAutoCommit(false);
@@ -49,20 +53,24 @@ class LancamentoDAOTest {
     void finalizarTeste() throws SQLException {
         if (connection != null) {
             try {
-                if (!connection.isClosed())
+                if (!connection.isClosed()) {
                     limparTabela();
+                }
             } finally {
                 connection.close();
             }
         }
     }
 
-    private void confirmarBancoDeTeste() throws SQLException {
+    private void confirmarBancoDeTeste()
+            throws SQLException {
+
         String bancoAtual = connection.getCatalog();
 
         if (!NOME_BANCO_TESTE.equals(bancoAtual)) {
             throw new IllegalStateException(
-                "Os testes so podem usar o banco " + NOME_BANCO_TESTE
+                "Os testes so podem usar o banco "
+                    + NOME_BANCO_TESTE
             );
         }
     }
@@ -70,8 +78,13 @@ class LancamentoDAOTest {
     private void limparTabela() throws SQLException {
         confirmarBancoDeTeste();
 
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DELETE FROM lancamento");
+        try (Statement statement =
+                connection.createStatement()) {
+
+            statement.executeUpdate(
+                "DELETE FROM lancamento"
+            );
+
             connection.commit();
         }
     }
@@ -80,7 +93,8 @@ class LancamentoDAOTest {
     void deveRetornarListaVaziaQuandoNaoExistiremLancamentos()
             throws SQLException {
 
-        List<Lancamento> resultado = dao.listarTodos();
+        List<Lancamento> resultado =
+            dao.listarTodos();
 
         assertNotNull(resultado);
         assertTrue(resultado.isEmpty());
@@ -95,7 +109,7 @@ class LancamentoDAOTest {
             LocalDate.of(2026, 8, 17),
             TipoMovimentacao.PIX,
             TipoLancamento.RECEITA,
-            1500.00
+            new BigDecimal("1500.00")
         );
 
         Lancamento despesa = new Lancamento(
@@ -103,67 +117,121 @@ class LancamentoDAOTest {
             LocalDate.of(2026, 8, 18),
             TipoMovimentacao.DEBITO,
             TipoLancamento.DESPESA,
-            200.00
+            new BigDecimal("200.00")
         );
 
         int idReceita = dao.inserir(receita);
         int idDespesa = dao.inserir(despesa);
 
-        List<Lancamento> resultado = dao.listarTodos();
+        List<Lancamento> resultado =
+            dao.listarTodos();
 
         assertEquals(2, resultado.size());
 
-        Lancamento receitaRecuperada = resultado.get(0);
-        Lancamento despesaRecuperada = resultado.get(1);
+        Lancamento receitaRecuperada =
+            resultado.get(0);
+
+        Lancamento despesaRecuperada =
+            resultado.get(1);
 
         assertAll(
-            () -> assertEquals(idReceita, receitaRecuperada.getId()),
-            () -> assertEquals(LocalDate.of(2026, 8, 17),
-                               receitaRecuperada.getData()),
-            () -> assertEquals(1500.00,
-                               receitaRecuperada.getValor(), 0.001),
-            () -> assertEquals(TipoLancamento.RECEITA,
-                               receitaRecuperada.getTipo()),
-            () -> assertEquals(TipoCategoria.EMPREGO,
-                               receitaRecuperada.getCategoria()),
-            () -> assertEquals(TipoMovimentacao.PIX,
-                               receitaRecuperada.getmeioDeMovimentacao()),
+            () -> assertEquals(
+                idReceita,
+                receitaRecuperada.getId()
+            ),
 
-            () -> assertEquals(idDespesa, despesaRecuperada.getId()),
-            () -> assertEquals(LocalDate.of(2026, 8, 18),
-                               despesaRecuperada.getData()),
-            () -> assertEquals(-200.00,
-                               despesaRecuperada.getValor(), 0.001),
-            () -> assertEquals(TipoLancamento.DESPESA,
-                               despesaRecuperada.getTipo()),
-            () -> assertEquals(TipoCategoria.MERCADO,
-                               despesaRecuperada.getCategoria()),
-            () -> assertEquals(TipoMovimentacao.DEBITO,
-                               despesaRecuperada.getmeioDeMovimentacao())
+            () -> assertEquals(
+                LocalDate.of(2026, 8, 17),
+                receitaRecuperada.getData()
+            ),
+
+            () -> assertEquals(
+                0,
+                new BigDecimal("1500.00")
+                    .compareTo(
+                        receitaRecuperada.getValor()
+                    )
+            ),
+
+            () -> assertEquals(
+                TipoLancamento.RECEITA,
+                receitaRecuperada.getTipo()
+            ),
+
+            () -> assertEquals(
+                TipoCategoria.EMPREGO,
+                receitaRecuperada.getCategoria()
+            ),
+
+            () -> assertEquals(
+                TipoMovimentacao.PIX,
+                receitaRecuperada
+                    .getmeioDeMovimentacao()
+            ),
+
+            () -> assertEquals(
+                idDespesa,
+                despesaRecuperada.getId()
+            ),
+
+            () -> assertEquals(
+                LocalDate.of(2026, 8, 18),
+                despesaRecuperada.getData()
+            ),
+
+            () -> assertEquals(
+                0,
+                new BigDecimal("200.00")
+                    .compareTo(
+                        despesaRecuperada.getValor()
+                    )
+            ),
+
+            () -> assertEquals(
+                TipoLancamento.DESPESA,
+                despesaRecuperada.getTipo()
+            ),
+
+            () -> assertEquals(
+                TipoCategoria.MERCADO,
+                despesaRecuperada.getCategoria()
+            ),
+
+            () -> assertEquals(
+                TipoMovimentacao.DEBITO,
+                despesaRecuperada
+                    .getmeioDeMovimentacao()
+            )
         );
     }
 
     @Test
-    void deveExcluirLancamentoExistente() throws SQLException {
+    void deveExcluirLancamentoExistente()
+            throws SQLException {
+
         Lancamento lancamento = new Lancamento(
             TipoCategoria.MERCADO,
             LocalDate.of(2026, 8, 17),
             TipoMovimentacao.DEBITO,
             TipoLancamento.DESPESA,
-            100.00
+            new BigDecimal("100.00")
         );
 
         int idGerado = dao.inserir(lancamento);
 
-        boolean excluiu = dao.excluirPorId(idGerado);
+        boolean excluiu =
+            dao.excluirPorId(idGerado);
 
         assertTrue(excluiu);
         assertTrue(dao.listarTodos().isEmpty());
     }
 
     @Test
-    void deveRetornarFalsoQuandoIdNaoExistir() throws SQLException {
-        boolean excluiu = dao.excluirPorId(Integer.MAX_VALUE);
+    void deveRetornarFalsoQuandoIdNaoExistir()
+            throws SQLException {
+
+        boolean excluiu =
+            dao.excluirPorId(Integer.MAX_VALUE);
 
         assertFalse(excluiu);
     }

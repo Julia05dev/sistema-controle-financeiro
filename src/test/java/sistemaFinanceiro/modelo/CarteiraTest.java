@@ -2,6 +2,7 @@ package sistemaFinanceiro.modelo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import sistemaFinanceiro.modelo.filtros.FiltroPorTipo;
 
 class CarteiraTest {
 
-    private Lancamento criarReceita(double valor) {
+    private Lancamento criarReceita(BigDecimal valor) {
         return new Lancamento(
                 TipoCategoria.EMPREGO,
                 LocalDate.of(2026, 8, 14),
@@ -23,7 +24,7 @@ class CarteiraTest {
                 valor);
     }
 
-    private Lancamento criarDespesa(double valor) {
+    private Lancamento criarDespesa(BigDecimal valor) {
         return new Lancamento(
                 TipoCategoria.MERCADO,
                 LocalDate.of(2026, 8, 14),
@@ -35,7 +36,7 @@ class CarteiraTest {
     @Test
     void deveAdicionarLancamento() {
         Carteira carteira = new Carteira();
-        Lancamento lancamento = criarReceita(1000.0);
+        Lancamento lancamento = criarReceita(new BigDecimal("1000.00"));
 
         carteira.addLancamento(lancamento);
 
@@ -57,8 +58,8 @@ class CarteiraTest {
     void deveAdicionarListaDeLancamentos() {
         Carteira carteira = new Carteira();
 
-        Lancamento receita = criarReceita(1000.0);
-        Lancamento despesa = criarDespesa(250.0);
+        Lancamento receita = criarReceita(new BigDecimal("1000.00"));
+        Lancamento despesa = criarDespesa(new BigDecimal("250.00"));
 
         carteira.addListaLancamentos(List.of(receita, despesa));
 
@@ -70,7 +71,7 @@ class CarteiraTest {
     @Test
     void deveBuscarLancamentoPorId() {
         Carteira carteira = new Carteira();
-        Lancamento lancamento = criarReceita(1000.0);
+        Lancamento lancamento = criarReceita(new BigDecimal("1000.00"));
 
         carteira.addLancamento(lancamento);
 
@@ -105,7 +106,7 @@ class CarteiraTest {
     @Test
     void deveRemoverLancamentoExistente() {
         Carteira carteira = new Carteira();
-        Lancamento lancamento = criarReceita(1000.0);
+        Lancamento lancamento = criarReceita(new BigDecimal("1000.00"));
 
         carteira.addLancamento(lancamento);
 
@@ -145,31 +146,24 @@ class CarteiraTest {
     void deveCalcularSaldoCorretamente() {
         Carteira carteira = new Carteira();
 
-        carteira.addLancamento(criarReceita(2000.0));
-        carteira.addLancamento(criarDespesa(300.0));
-        carteira.addLancamento(criarDespesa(200.0));
+        carteira.addLancamento(criarReceita(new BigDecimal("2000.00")));
+        carteira.addLancamento(criarDespesa(new BigDecimal("300.00")));
+        carteira.addLancamento(criarDespesa(new BigDecimal("200.00")));
 
-        assertEquals(
-                1500.0,
-                carteira.calculaSaldo(),
-                0.0001);
-    }
+        assertEquals(0, new BigDecimal("1500.00").compareTo(carteira.calculaSaldo()));
+        }
 
     @Test
     void carteiraVaziaDeveTerSaldoZero() {
         Carteira carteira = new Carteira();
-
-        assertEquals(
-                0.0,
-                carteira.calculaSaldo(),
-                0.0001);
+        assertEquals(0, BigDecimal.ZERO.compareTo(carteira.calculaSaldo()));
     }
 
     @Test
     void mostraLancamentosDeveRetornarCopiaDaLista() {
         Carteira carteira = new Carteira();
 
-        Lancamento lancamento = criarReceita(1000.0);
+        Lancamento lancamento = criarReceita(new BigDecimal("1000.00"));
         carteira.addLancamento(lancamento);
 
         List<Lancamento> copia =
@@ -190,8 +184,8 @@ class CarteiraTest {
     void deveFiltrarLancamentosUsandoFiltroInformado() {
         Carteira carteira = new Carteira();
 
-        Lancamento receita = criarReceita(1000.0);
-        Lancamento despesa = criarDespesa(250.0);
+        Lancamento receita = criarReceita(new BigDecimal("1000.00"));
+        Lancamento despesa = criarDespesa(new BigDecimal("250.00"));
 
         carteira.addLancamento(receita);
         carteira.addLancamento(despesa);

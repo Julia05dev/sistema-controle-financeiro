@@ -2,6 +2,7 @@ package sistemaFinanceiro.modelo.filtros;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class FiltroDataTest {
                 data,
                 TipoMovimentacao.DEBITO,
                 TipoLancamento.DESPESA,
-                100.0);
+                new BigDecimal("100.00"));
     }
 
     @Test
