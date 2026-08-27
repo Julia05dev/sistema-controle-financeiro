@@ -1,0 +1,15 @@
+# Arquivos gerados pelo Maven
+target/
+
+# Configurações locais do VS Code
+.vscode/
+
+# Arquivos automáticos da extensão de modernização Java
+.github/java-upgrade/
+.github/modernize/
+
+# Arquivos Java compilados
+*.class
+
+# Arquivos locais com variáveis de ambiente
+.env
