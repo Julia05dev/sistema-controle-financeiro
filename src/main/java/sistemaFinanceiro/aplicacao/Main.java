@@ -2,6 +2,7 @@ package sistemaFinanceiro.aplicacao;
 import java.util.*;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import sistemaFinanceiro.exportacao.RelatorioExcel;
 
@@ -265,17 +266,22 @@ public class Main {
         RelatorioMensal relatorio = sistemaFinanceiro.gerarRelatorioMensal(mes, ano);
         RelatorioExcel exportador = new RelatorioExcel();
 
-        try {
+        try{
             Path arquivo = exportador.exportar(relatorio);
+            if(!Files.exists(arquivo))
+                throw new IOException("O arquivo nao foi encontrado depois da exportacao.");
 
             System.out.println();
             System.out.println("Relatorio gerado com sucesso!");
             System.out.println("Arquivo: " + arquivo);
+            System.out.println("Tamanho: " + Files.size(arquivo) + " bytes");
             System.out.println();
-        } catch (IOException e) {
+
+        }catch(IOException e){
             System.out.println();
-            System.out.println("Erro ao gerar o arquivo Excel.");
+            System.out.println("Erro ao gerar ou localizar o arquivo Excel.");
             System.out.println(e.getMessage());
+            e.printStackTrace();
             System.out.println();
         }
     }
