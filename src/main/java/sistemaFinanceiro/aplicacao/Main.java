@@ -1,6 +1,10 @@
 package sistemaFinanceiro.aplicacao;
 import java.util.*;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import sistemaFinanceiro.exportacao.RelatorioExcel;
+
 import sistemaFinanceiro.servico.*;
 import sistemaFinanceiro.modelo.*;
 import sistemaFinanceiro.modelo.enums.TipoCategoria;
@@ -251,55 +255,29 @@ public class Main {
             }
         }
     }
-    public static void mostrandoRelatorioMensal(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws SQLException {
+    public static void gerandoRelatorioMensal(SistemaFinanceiro sistemaFinanceiro, Scanner scanner) throws SQLException {
         System.out.println("Informe o mes do relatorio:");
         int mes = lerIntervalo(12, 1, scanner);
+
         System.out.println("Informe o ano do relatorio:");
         int ano = lerIntervalo(Integer.MAX_VALUE, 1, scanner);
 
         RelatorioMensal relatorio = sistemaFinanceiro.gerarRelatorioMensal(mes, ano);
+        RelatorioExcel exportador = new RelatorioExcel();
 
-        System.out.println();
-        System.out.println("-------------------------------------------------------------");
-        System.out.printf("RELATORIO MENSAL - %02d/%d%n", relatorio.getMes(), relatorio.getAno());
-        System.out.println("-------------------------------------------------------------");
-        System.out.printf("Total de receitas: R$%.2f%n", relatorio.getTotalReceitas());
-        System.out.printf("Total de despesas: R$%.2f%n", relatorio.getTotalDespesas());
-        System.out.printf("Saldo do periodo: R$%.2f%n", relatorio.getSaldo());
-        System.out.println();
-        System.out.println("RECEITAS POR CATEGORIA:");
+        try {
+            Path arquivo = exportador.exportar(relatorio);
 
-        if (relatorio.getReceitasPorCategoria().isEmpty()) {
-            System.out.println("Nenhuma receita no periodo.");
-        } else {
-            for (Map.Entry<TipoCategoria, BigDecimal> resultado : relatorio.getReceitasPorCategoria().entrySet()) {
-                System.out.printf("%s: R$%.2f%n", resultado.getKey(), resultado.getValue());
-            }
+            System.out.println();
+            System.out.println("Relatorio gerado com sucesso!");
+            System.out.println("Arquivo: " + arquivo);
+            System.out.println();
+        } catch (IOException e) {
+            System.out.println();
+            System.out.println("Erro ao gerar o arquivo Excel.");
+            System.out.println(e.getMessage());
+            System.out.println();
         }
-
-        System.out.println();
-        System.out.println("DESPESAS POR CATEGORIA:");
-
-        if (relatorio.getDespesasPorCategoria().isEmpty()) {
-            System.out.println("Nenhuma despesa no periodo.");
-        } else {
-            for (Map.Entry<TipoCategoria, BigDecimal> resultado : relatorio.getDespesasPorCategoria().entrySet()) {
-                System.out.printf("%s: R$%.2f%n", resultado.getKey(), resultado.getValue()
-                );
-            }
-        }
-
-        System.out.println();
-        System.out.println("LANCAMENTOS DO PERIODO:");
-
-        if (relatorio.getLancamentos().isEmpty()) {
-            System.out.println("Nenhum lancamento no periodo.");
-        } else {
-            for (Lancamento lancamento : relatorio.getLancamentos()) {
-                System.out.println(lancamento);
-            }
-        }
-        System.out.println("-------------------------------------------------------------");
     }
 
     //metodo auxiliar pra definir categoria (a depender do tipo)
@@ -447,7 +425,7 @@ public class Main {
                     + "3- calcular saldo\n"
                     + "4- mostrar lancamentos\n"
                     + "5- filtrar lancamentos\n"
-                    + "6- mostrar relatorio mensal\n"
+                    + "6- gerar relatorio mensal em Excel\\n"
                     + "7- alterar um lancamento\n"
                     + "0- SAIR");
                 System.out.println("-------------------------------------------------------------");
@@ -469,7 +447,7 @@ public class Main {
                     case 5 -> {
                         filtrandoLancamentos(sistemaFinanceiro, scanner);
                     }case 6 -> {
-                        mostrandoRelatorioMensal(sistemaFinanceiro, scanner);
+                        gerandoRelatorioMensal(sistemaFinanceiro, scanner);
                     }case 7 -> {
                         alterandoLancamento(sistemaFinanceiro, scanner);
                     }

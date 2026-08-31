@@ -13,3 +13,5 @@ target/
 
 # Arquivos locais com variáveis de ambiente
 .env
+# Relatorios Excel gerados pelo sistema
+relatorios/
